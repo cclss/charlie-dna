@@ -75,7 +75,7 @@ git commit -m "release: vX.Y.Z — 변경 요약"
 # 검증만 (실제 태그/푸시 안 함)
 ./scripts/release.sh vX.Y.Z --dry-run
 
-# 실행 (태그 + 푸시 + GitHub Release 생성)
+# 실행 (태그 + 푸시)
 ./scripts/release.sh vX.Y.Z
 ```
 
@@ -84,13 +84,11 @@ git commit -m "release: vX.Y.Z — 변경 요약"
 2. CHANGELOG.md에 해당 버전 섹션 존재 확인
 3. git tag 생성
 4. origin에 push (master + tags)
-5. `gh release create` (CHANGELOG에서 릴리즈 노트 추출)
 
-### 4. 확인
+### 4. CI가 자동 처리
 
-- GitHub Releases 페이지에서 릴리즈 확인.
-- tag push 시 GitHub Action이 자동으로 Release를 생성하므로,
-  스크립트의 `gh release`가 실패해도 Action이 백업으로 처리한다.
+- tag push 시 GitHub Action이 CHANGELOG.md에서 릴리즈 노트를 추출하여 GitHub Release를 자동 생성한다.
+- GitHub Releases 페이지에서 결과를 확인한다.
 
 ---
 

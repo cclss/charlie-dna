@@ -3,6 +3,9 @@ set -euo pipefail
 
 # charlie-dna release script
 # Usage: ./scripts/release.sh vX.Y.Z [--dry-run]
+#
+# 하는 일: 검증 → 태그 → 푸시. 끝.
+# GitHub Release는 CI(.github/workflows/release.yml)가 자동 생성한다.
 
 VERSION="${1:-}"
 DRY_RUN=false
@@ -42,9 +45,8 @@ if ! grep -q "## $VERSION" "$CHANGELOG" && ! grep -q "## v$VERSION_NO_V" "$CHANG
   exit 1
 fi
 
-# --- Extract release notes ---
+# --- Preview ---
 
-# Extract the section for this version from CHANGELOG.md
 NOTES=$(awk "/^## $VERSION/{found=1; next} /^## v[0-9]/{if(found) exit} found" "$CHANGELOG")
 if [[ -z "$NOTES" ]]; then
   NOTES=$(awk "/^## v$VERSION_NO_V/{found=1; next} /^## v[0-9]/{if(found) exit} found" "$CHANGELOG")
@@ -52,14 +54,14 @@ fi
 
 echo "=== Release: $VERSION ==="
 echo ""
-echo "Release notes:"
+echo "Release notes (CI will use this for GitHub Release):"
 echo "$NOTES"
 echo ""
 
 if [[ "$DRY_RUN" == true ]]; then
   echo "[dry-run] Would create tag: $VERSION"
   echo "[dry-run] Would push: origin master --tags"
-  echo "[dry-run] Would create GitHub release"
+  echo "[dry-run] CI would then create GitHub Release automatically."
   exit 0
 fi
 
@@ -71,15 +73,6 @@ git tag "$VERSION"
 echo "Pushing to origin..."
 git push origin master --tags
 
-# --- GitHub Release ---
-
-if command -v gh &> /dev/null; then
-  echo "Creating GitHub release..."
-  echo "$NOTES" | gh release create "$VERSION" \
-    --title "$VERSION" \
-    --notes-file -
-  echo "Done. https://github.com/cclss/charlie-dna/releases/tag/$VERSION"
-else
-  echo "gh CLI not found. Tag pushed. Create release manually on GitHub."
-  echo "https://github.com/cclss/charlie-dna/releases/new?tag=$VERSION"
-fi
+echo ""
+echo "Done. CI will create GitHub Release automatically."
+echo "https://github.com/cclss/charlie-dna/releases"
