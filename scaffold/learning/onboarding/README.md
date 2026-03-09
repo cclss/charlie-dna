@@ -38,6 +38,7 @@
 5. `.charlie/context/architecture.md` — 기술 구조.
 6. `.charlie/context/boundaries.md` — 하지 말아야 할 것.
 7. `learning/onboarding/architecture-tour.md` — 구조 이해 가이드.
+8. `learning/adr/` — 최근 결정을 훑어라.
 
 ---
 

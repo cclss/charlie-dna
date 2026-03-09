@@ -1,6 +1,7 @@
 # ADR 제목
 
 > STATUS: proposed | accepted | deprecated | superseded
+> 날짜: YYYY-MM-DD
 
 ## 컨텍스트
 
