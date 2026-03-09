@@ -13,12 +13,12 @@ charlie-dna는 순수 Markdown 저장소다.
 ## 브랜치 전략
 
 ```
-master        최신 안정 버전. 직접 작업.
+master        최신 안정 버전. 릴리즈 태그는 여기서만.
 v1            v2.0.0 출시 시 master에서 분기. v1 유지보수용.
               (v2 시작 전까지 불필요)
 ```
 
-- `master`에서 직접 작업한다. 변경 빈도가 낮으므로 develop 브랜치 불필요.
+- master에 직접 커밋하지 않는다. 항상 브랜치 → PR → 머지.
 - 메이저 버전 업그레이드 시 이전 메이저의 유지보수 브랜치를 분기한다.
   예: v2.0.0 출시 → `v1` 브랜치를 v1 최종 태그에서 생성.
 
@@ -32,6 +32,7 @@ v1.0.0, v1.1.0, v2.0.0 ...
 
 - Semver. `vX.Y.Z` 형식.
 - 태그는 불변이다. 삭제하지 않는다.
+- 태그는 항상 master에서만 생성한다.
 - 구버전 접근의 핵심 수단이다.
 
 ---
@@ -50,9 +51,25 @@ charlie-cli가 `charlie dna update` 시:
 
 ---
 
-## 릴리즈 절차
+## 워크플로우
 
-### 1. CHANGELOG.md 업데이트
+### 1. 작업 브랜치 생성
+
+```bash
+git checkout master
+git pull origin master
+git checkout -b fix/philosophy-typo    # 또는 feat/, chore/ 등
+```
+
+### 2. 수정 + 커밋
+
+```bash
+# 변경 작업
+git add -A
+git commit -m "fix: philosophy.md 오타 수정"
+```
+
+### 3. CHANGELOG.md 업데이트 + 커밋
 
 새 버전 섹션을 추가한다:
 
@@ -62,16 +79,25 @@ charlie-cli가 `charlie dna update` 시:
 변경 내용 기술.
 ```
 
-### 2. 커밋
-
 ```bash
-git add -A
-git commit -m "release: vX.Y.Z — 변경 요약"
+git add CHANGELOG.md
+git commit -m "release: vX.Y.Z"
 ```
 
-### 3. 릴리즈 스크립트 실행
+### 4. push + PR + 머지
 
 ```bash
+git push origin fix/philosophy-typo
+```
+
+GitHub에서 PR 생성 → 리뷰 → master에 머지.
+
+### 5. 태그 + 릴리즈
+
+```bash
+git checkout master
+git pull origin master
+
 # 검증만 (실제 태그/푸시 안 함)
 ./scripts/release.sh vX.Y.Z --dry-run
 
@@ -85,7 +111,7 @@ git commit -m "release: vX.Y.Z — 변경 요약"
 3. git tag 생성
 4. origin에 push (master + tags)
 
-### 4. CI가 자동 처리
+### 6. CI가 자동 처리
 
 - tag push 시 GitHub Action이 CHANGELOG.md에서 릴리즈 노트를 추출하여 GitHub Release를 자동 생성한다.
 - GitHub Releases 페이지에서 결과를 확인한다.
