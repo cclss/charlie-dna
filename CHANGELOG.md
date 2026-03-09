@@ -2,6 +2,16 @@
 
 ---
 
+## v0.1.0 — 2026-03-09
+
+릴리즈 워크플로우 테스트.
+
+- `scripts/release.sh` — 릴리즈 스크립트 추가.
+- `.github/workflows/release.yml` — tag push 시 GitHub Release 자동 생성.
+- `CONTRIBUTING.md` — 브랜치→PR→머지→태그 워크플로우 문서.
+
+---
+
 ## v1.0.0 — 2026-03-09
 
 초기 안정 릴리즈.
