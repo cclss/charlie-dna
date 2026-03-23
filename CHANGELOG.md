@@ -2,6 +2,16 @@
 
 ---
 
+## v0.2.0 — 2026-03-23
+
+Interaction signal protocol 추가.
+
+- `principal/ai-protocol.md` — §4에 Signal Protocol 서브섹션 추가 (신호 시 프로세스 종료 원칙, 안정 상태 확보 규칙).
+- `principal/skills/implement/SKILL.md` — "How to Signal" + "After Resume" 서브섹션 추가 (`AskUserQuestion` 라이프사이클, 재개 절차).
+- `agents/implementer.md` — "Resume After Interaction" 섹션 추가 (주입 맥락 인식, 중단점 이어가기).
+
+---
+
 ## v0.1.0 — 2026-03-09
 
 릴리즈 워크플로우 테스트.
