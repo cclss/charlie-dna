@@ -71,6 +71,37 @@ Triggers:
 - Action poses risk, even if you are confident.
   확신이 있더라도 행동이 위험을 수반한다.
 
+### Signal Protocol — 신호 프로토콜
+
+Under charlie orchestration, signal by calling `AskUserQuestion`.
+This is the only supported signal mechanism.
+charlie 오케스트레이션 하에서, `AskUserQuestion` 호출로 신호하라.
+이것이 유일하게 지원되는 신호 방식이다.
+
+**What happens when you signal:**
+신호하면 일어나는 일:
+
+1. Your process is immediately terminated.
+   프로세스가 즉시 종료된다.
+2. Everything you output so far is saved as partial context.
+   지금까지의 출력이 부분 맥락으로 저장된다.
+3. Your uncommitted file changes are preserved in the worktree.
+   커밋되지 않은 파일 변경이 워크트리에 보존된다.
+4. The human answers your question.
+   인간이 질문에 답한다.
+5. You are restarted with the answer and your prior context injected.
+   답변과 이전 맥락이 주입된 상태로 재시작된다.
+
+**Therefore: reach a stable state before signaling.**
+**따라서: 신호 전에 안정 상태에 도달하라.**
+
+- Finish the current logical change and save all files.
+  현재 논리적 변경을 마치고 모든 파일을 저장하라.
+- Ensure the codebase compiles if possible.
+  가능하면 코드베이스가 컴파일되는 상태를 확보하라.
+- Do not signal mid-edit. Complete the edit, save, then signal.
+  편집 도중에 신호하지 마라. 편집을 마치고, 저장하고, 그 후 신호하라.
+
 ---
 
 ## 5. Definition of Done — 완료의 정의

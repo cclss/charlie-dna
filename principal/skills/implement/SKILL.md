@@ -159,7 +159,51 @@ When you signal, include:
 3. What you recommend, if you have an opinion.
    의견이 있다면 추천하는 것.
 
-Use the signal format specified by the execution context.
-If none specified, ask the human directly.
-실행 맥락이 지정한 신호 형식을 사용하라.
-지정되지 않았으면 인간에게 직접 물어라.
+### How to Signal — 신호 방법
+
+Call `AskUserQuestion`. Your process will be terminated immediately upon the call.
+`AskUserQuestion`을 호출하라. 호출 즉시 프로세스가 종료된다.
+
+**Before calling:**
+호출 전:
+
+1. Save all file changes to disk.
+   모든 파일 변경을 디스크에 저장하라.
+2. Ensure the codebase is in a compilable state if possible.
+   가능하면 코드베이스가 컴파일되는 상태를 확보하라.
+3. Formulate a clear, specific question. Include:
+   명확하고 구체적인 질문을 구성하라. 포함할 것:
+   - What you have done so far (progress summary).
+     지금까지 한 것 (진행 요약).
+   - What blocked you (specific issue).
+     막힌 것 (구체적 문제).
+   - Your recommendation, if any (with reasoning).
+     추천사항이 있다면 (근거와 함께).
+
+**For choices** — provide 2-4 concrete options with descriptions.
+**선택지가 있을 때** — 2-4개 구체적 선택지를 설명과 함께 제공하라.
+
+**For open-ended input** — ask a specific, answerable question.
+**자유 입력이 필요할 때** — 구체적이고 답변 가능한 질문을 하라.
+
+### After Resume — 재개 후
+
+When you are restarted after signaling, your prompt will contain:
+신호 후 재시작되면 프롬프트에 다음이 포함된다:
+
+- `## Previous Agent Session (interrupted for interaction)` — with your partial output, the question, and the human's answer.
+  이전 세션의 부분 출력, 질문, 인간의 답변.
+- Your file changes are preserved in the worktree (uncommitted).
+  파일 변경이 워크트리에 보존됨 (커밋되지 않은 상태).
+
+When this context is present:
+이 맥락이 있을 때:
+
+1. Read the injected context. Understand what you did before and what the human answered.
+   주입된 맥락을 읽어라. 이전에 한 것과 인간이 답한 것을 파악하라.
+2. Verify your prior file changes still exist (`ls`, `cat`, or read the relevant files).
+   이전 파일 변경이 존재하는지 확인하라.
+3. Continue from the interruption point. Do not start over.
+   중단 지점에서 이어가라. 처음부터 시작하지 마라.
+4. Apply the human's answer to resolve the blocking issue.
+   인간의 답변을 적용하여 막힌 문제를 해결하라.

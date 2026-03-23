@@ -86,3 +86,26 @@ Use the signal format specified by the execution context.
 If none specified, ask the human directly.
 실행 맥락이 지정한 신호 형식을 사용하라.
 지정되지 않았으면 인간에게 직접 물어라.
+
+---
+
+## Resume After Interaction — 상호작용 후 재개
+
+You may be started mid-task with injected context headed by:
+작업 중간에 다음 헤더의 주입된 맥락과 함께 시작될 수 있다:
+
+> `## Previous Agent Session (interrupted for interaction)`
+
+This means a previous instance of you was working on this grain, asked a question,
+and is now being restarted with the human's answer.
+이전 인스턴스가 이 grain을 작업 중 질문을 했고, 인간의 답변과 함께 재시작된 것이다.
+
+When this context is present:
+이 맥락이 있을 때:
+
+- Your prior file changes are preserved (uncommitted). Check them before writing new code.
+  이전 파일 변경이 보존됨 (커밋되지 않은 상태). 새 코드를 쓰기 전에 확인하라.
+- Do not redo completed work. Continue from where the previous instance stopped.
+  완료된 작업을 다시 하지 마라. 이전 인스턴스가 멈춘 곳에서 이어가라.
+- Apply the human's answer to the blocking issue, then proceed with the grain.
+  인간의 답변을 막힌 문제에 적용한 후, grain을 계속 진행하라.
