@@ -171,7 +171,9 @@ Call `AskUserQuestion`. Your process will be terminated immediately upon the cal
    모든 파일 변경을 디스크에 저장하라.
 2. Ensure the codebase is in a compilable state if possible.
    가능하면 코드베이스가 컴파일되는 상태를 확보하라.
-3. Formulate a clear, specific question. Include:
+3. Do not signal mid-edit. Complete the edit and save first.
+   편집 도중에 신호하지 마라. 편집을 마치고 저장한 후 신호하라.
+4. Formulate a clear, specific question. Include:
    명확하고 구체적인 질문을 구성하라. 포함할 것:
    - What you have done so far (progress summary).
      지금까지 한 것 (진행 요약).
