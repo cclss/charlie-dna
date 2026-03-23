@@ -73,34 +73,16 @@ Triggers:
 
 ### Signal Protocol — 신호 프로토콜
 
-Under charlie orchestration, signal by calling `AskUserQuestion`.
-This is the only supported signal mechanism.
-charlie 오케스트레이션 하에서, `AskUserQuestion` 호출로 신호하라.
-이것이 유일하게 지원되는 신호 방식이다.
+Signaling may terminate your process. Reach a stable state before you signal.
+신호는 프로세스를 종료시킬 수 있다. 신호 전에 안정 상태에 도달하라.
 
-**What happens when you signal:**
-신호하면 일어나는 일:
+- Complete the current logical change and save all files before signaling.
+  신호 전에 현재 논리적 변경을 마치고 모든 파일을 저장하라.
+- Do not signal mid-edit.
+  편집 도중에 신호하지 마라.
 
-1. Your process is immediately terminated.
-   프로세스가 즉시 종료된다.
-2. Everything you output so far is saved as partial context.
-   지금까지의 출력이 부분 맥락으로 저장된다.
-3. Your uncommitted file changes are preserved in the worktree.
-   커밋되지 않은 파일 변경이 워크트리에 보존된다.
-4. The human answers your question.
-   인간이 질문에 답한다.
-5. You are restarted with the answer and your prior context injected.
-   답변과 이전 맥락이 주입된 상태로 재시작된다.
-
-**Therefore: reach a stable state before signaling.**
-**따라서: 신호 전에 안정 상태에 도달하라.**
-
-- Finish the current logical change and save all files.
-  현재 논리적 변경을 마치고 모든 파일을 저장하라.
-- Ensure the codebase compiles if possible.
-  가능하면 코드베이스가 컴파일되는 상태를 확보하라.
-- Do not signal mid-edit. Complete the edit, save, then signal.
-  편집 도중에 신호하지 마라. 편집을 마치고, 저장하고, 그 후 신호하라.
+The specific signal mechanism and resume behavior are defined by each skill.
+구체적인 신호 방식과 재개 동작은 각 스킬이 정의한다.
 
 ---
 
