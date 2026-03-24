@@ -2,6 +2,16 @@
 
 ---
 
+## v0.3.0 — 2026-03-25
+
+외부 경계 테스트에 mock adapter 규칙 추가.
+
+- `principal/engineering.md` — §2 "Test Drives Design"에 외부 서비스 모킹 원칙 추가.
+- `principal/engineering.md` — §5 "Isolate What Varies"에 테스트 시 mock adapter 사용 원칙 추가.
+- `principal/skills/implement/SKILL.md` — Step 3 "Test failure"에 환경 의존적 테스트 실패 대응 규칙 추가 (죽음의 소용돌이 차단).
+
+---
+
 ## v0.2.0 — 2026-03-23
 
 Interaction signal protocol 추가.

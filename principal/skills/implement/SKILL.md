@@ -76,6 +76,8 @@ Errors are information. Act on them, do not hide them.
 테스트 실패:
 - A failing test you wrote means your code is wrong. Fix the code, not the test.
   네가 작성한 테스트가 실패하면 코드가 틀린 것이다. 테스트가 아니라 코드를 고쳐라.
+- If the test fails because it calls a real external service, fix the test — replace the real call with a mock adapter. Do not modify production code to make an environment-dependent test pass.
+  테스트가 실제 외부 서비스 호출 때문에 실패하면, 테스트를 고쳐라 — 실제 호출을 모의 어댑터로 교체하라. 환경 의존적 테스트를 통과시키려고 프로덕션 코드를 수정하지 마라.
 - A pre-existing test failing means your change broke something. Understand why before changing anything.
   기존 테스트가 실패하면 네 변경이 뭔가를 깨뜨린 것이다. 아무것도 바꾸기 전에 왜인지 이해하라.
 - If the affected code has no tests, write characterization tests before modifying it. Know what the code does now before changing what it does.

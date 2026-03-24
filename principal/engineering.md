@@ -74,6 +74,8 @@ Without them, "it works" is an opinion, not a fact.
   테스트 코드는 프로덕션 코드다. 테스트가 읽히지 않으면 사양서로서 실패한 것이다.
 - Tests must run fast. A slow test suite is a test suite nobody runs.
   테스트는 빠르게 돌아야 한다. 느린 테스트 슈트는 아무도 돌리지 않는 테스트 슈트다.
+- Tests that call real external services are not tests — they are hopes. Mock external boundaries.
+  실제 외부 서비스를 호출하는 테스트는 테스트가 아니다 — 희망이다. 외부 경계를 모킹하라.
 - A test that cannot fail is not a test. Verify that tests actually detect breakage.
   실패할 수 없는 테스트는 테스트가 아니다. 테스트가 실제로 파손을 감지하는지 검증하라.
 
@@ -143,6 +145,8 @@ This is the real test of isolation — not change, but removal.
   기존 코드에서는 의존성 방향을 악화시키지 마라.
 - Define boundaries explicitly — interfaces, adapters, wrappers. The pattern name matters less than the guarantee: swap one part, nothing else breaks.
   경계를 명시적으로 정의하라 — 인터페이스, 어댑터, 래퍼. 패턴 이름보다 보장이 중요하다: 한 부분을 교체해도 다른 것은 깨지지 않는다.
+- Tests use the same boundaries. Mock adapters at test time prove isolation works.
+  테스트도 같은 경계를 쓴다. 테스트 시 모의 어댑터는 격리가 작동함을 증명한다.
 
 ---
 
