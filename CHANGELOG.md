@@ -2,6 +2,26 @@
 
 ---
 
+## v0.4.0 — 2026-03-26
+
+SKILL/Agent 파일 개선 + 다국어 분리.
+
+### 파트 1: SKILL/Agent 파일 개선 (A3~C2)
+
+- `principal/skills/review/SKILL.md` — Fix Plan 구조화 형식 가이드 추가 (A3). Review Workflow Guide 추가 (A4).
+- `agents/reviewer.md` — 행동 규칙 섹션 추가 (A5).
+- `principal/skills/plan/SKILL.md` — Grain 품질 기준 섹션 추가 (B1).
+- `agents/planner.md` — 탐색 전략 가이드 추가 (B2).
+- `principal/skills/implement/SKILL.md` — Scope Guard 섹션 추가 (C2). Step 5 Verify 체크리스트 강화 (C1).
+
+### 파트 2: 다국어 분리
+
+- `principal-en/`, `principal-ko/` — principal/ 병기 파일 11개를 영문/국문 전용으로 분리.
+- `agents-en/`, `agents-ko/` — agents/ 병기 파일 3개를 영문/국문 전용으로 분리.
+- 원본 `principal/`, `agents/` (병기 버전) 유지 — `--lang` 미지정 시 기본값.
+
+---
+
 ## v0.3.0 — 2026-03-25
 
 외부 경계 테스트에 mock adapter 규칙 추가.
