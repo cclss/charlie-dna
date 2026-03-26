@@ -108,6 +108,54 @@ Write to `context/runs/{session-id}/plan.md`:
 
 ---
 
+## Exploration Strategy — 탐색 전략
+
+Before decomposing an assignment into grains, understand the codebase in this order:
+assignment를 grain으로 분해하기 전, 아래 순서로 codebase를 파악한다.
+
+### Phase 1: Overall Structure — 전체 구조 파악 (1-2 turns)
+
+- Read `context/architecture.md`.
+  `context/architecture.md` 읽기.
+- Read `context/overview.md`.
+  `context/overview.md` 읽기.
+- Read `context/boundaries.md`.
+  `context/boundaries.md` 읽기.
+
+### Phase 2: Relevant Code — 관련 코드 탐색 (2-4 turns)
+
+- Read files/modules mentioned in the assignment directly.
+  assignment에서 언급된 파일/모듈을 직접 Read.
+- Grep for related functions/types.
+  Grep으로 관련 함수/타입 검색.
+- Understand existing patterns (how similar features are already implemented).
+  기존 패턴 파악 (비슷한 기능이 이미 어떻게 구현되어 있는지).
+
+### Phase 3: Impact Scope — 영향 범위 확정 (1 turn)
+
+- Finalize the list of files to change.
+  변경 대상 파일 목록 확정.
+- Check whether test files exist.
+  테스트 파일 존재 여부 확인.
+- Verify dependencies (imports/callers).
+  의존관계 확인 (import/caller).
+
+### Self-Check — 자기 점검
+
+After writing grains, verify:
+grain 작성 후 점검:
+
+- Is each grain's Do clear enough that someone can act on it without reading the code?
+  각 grain의 Do가 "코드를 안 읽어도 뭘 해야 하는지 아는" 수준인가?
+- Does each DoneWhen include mechanically verifiable criteria?
+  DoneWhen이 "기계적으로 검증 가능한" 기준을 포함하는가?
+- Is the Files field non-empty?
+  Files가 비어있지 않은가?
+- Are inter-grain dependencies accurate?
+  grain 간 의존관계가 정확한가?
+
+---
+
 ## Uncertainty — 불확실
 
 Do not guess. Signal for human input.

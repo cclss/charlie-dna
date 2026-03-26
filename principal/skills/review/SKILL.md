@@ -101,6 +101,67 @@ Output:
 
 ---
 
+## Review Workflow Guide — 리뷰 워크플로 가이드
+
+A reference for how to approach each review systematically.
+각 리뷰를 체계적으로 접근하기 위한 참조 가이드.
+
+### Phase 1: Orientation — 방향 파악
+
+- `git diff --stat` to understand the scope of changes.
+  `git diff --stat`으로 변경 범위를 파악하라.
+- `git diff` to read the actual changes (when available).
+  `git diff`로 실제 변경 내용을 파악하라 (있는 경우).
+- Check each grain's Do / DoneWhen / OutOfScope.
+  각 grain의 Do / DoneWhen / OutOfScope를 확인하라.
+
+### Phase 2: Exploration — 탐색
+
+- Selectively Read/Grep only the suspicious parts from the diff.
+  diff에서 의심스러운 부분만 선택적으로 Read/Grep하라.
+- Do not read entire files — only the changed parts and their surrounding context.
+  전체 파일을 읽지 마라 — 변경된 부분과 그 주변 맥락만.
+
+### Phase 3: Judgment — 판단 (4기준별)
+
+**1. Requirements fulfillment — 요구사항 충족:**
+- Check each grain's DoneWhen one by one.
+  각 grain의 DoneWhen을 하나씩 체크하라.
+- State judgment concretely: "DoneWhen condition X is not met."
+  "DoneWhen 조건 X가 충족되지 않음" 형태로 구체적으로 판단하라.
+- Anything in OutOfScope is excluded from FAIL reasons.
+  OutOfScope에 해당하는 것은 FAIL 사유에서 제외하라.
+
+**2. Semantic consistency — 의미적 일관성:**
+- Check only interface mismatches between grains (function signatures, types, imports).
+  grain 간 인터페이스 불일치만 확인하라 (함수 시그니처, 타입, import).
+- Style consistency is not a FAIL reason (warning only).
+  스타일 일관성은 FAIL 사유가 아니다 (warning만).
+
+**3. Architecture alignment — 아키텍처 정합성:**
+- Reference `context/architecture.md` if it exists.
+  `context/architecture.md`가 있으면 참조하라.
+- If it does not exist, this criterion is an automatic PASS.
+  없으면 이 기준은 자동 PASS.
+
+**4. Readability — 가독성:**
+- Only FAIL for "incomprehensible code" — not for "could be better code."
+  "이해할 수 없는 코드"만 FAIL — "더 좋을 수 있는 코드"는 FAIL이 아니다.
+- Naming issues and lack of comments are warnings, not FAIL reasons.
+  네이밍 이슈와 주석 부족은 warning이다 (FAIL 아님).
+
+### Phase 4: Verdict — 판정
+
+- If any criterion has a substantive problem → FAIL.
+  4기준 중 하나라도 실질적 문제가 있으면 FAIL.
+- If only minor issues exist → PASS + warning comments.
+  경미한 이슈만 있으면 PASS + warning 코멘트.
+
+**Default stance: if requirements are met, PASS — even if the code is not perfect.**
+**기본 자세: 요구사항을 충족하면 PASS — 코드가 완벽하지 않더라도.**
+
+---
+
 ## Fix-Plan — 수정 계획
 
 The fix-plan must be actionable. The implementer executes it without guessing.
@@ -133,3 +194,34 @@ Good: "Add timeout handling to the HTTP client in `auth/client.go` — currently
 
 Bad: "Fix the interface mismatch."
 Good: "grain-1 returns user ID as `string`, grain-2 expects `int`. Align on `string` in grain-2's `handler.go` — grain-1's contract is correct per the API spec."
+
+### Structured Fix Plan Format — 구조화된 Fix Plan 형식
+
+When writing a FAIL fix-plan, follow this structure for each fix item:
+FAIL fix-plan 작성 시 각 수정 항목에 대해 아래 구조를 따르라:
+
+```
+### fix-item-1
+- **Grain**: target grain-id
+- **File**: path/to/file.go:line-range
+- **Issue**: what is wrong (symptom and cause)
+- **Action**: specific fix instruction
+  - Before: `existing code snippet`
+  - After: `fixed code snippet`
+```
+
+Rules for fix items:
+수정 항목 규칙:
+
+- File path and line number must always be included.
+  파일 경로와 라인 번호는 반드시 포함하라.
+- When Before/After code snippets are provided, the implementer can apply the fix without interpretation.
+  Before/After 코드 스니펫이 있으면 implementer가 해석 없이 적용할 수 있다.
+- Give concrete instructions, not abstract ones.
+  추상적 지시가 아닌 구체적 지시를 내려라.
+
+Bad: "Improve error handling."
+Good: "Add `if err != nil` check at `handler.go:45`."
+
+Bad: "Fix the test."
+Good: "In `handler_test.go:120`, change expected status from `200` to `201` — the handler now returns Created."

@@ -84,6 +84,19 @@ fix-plan은 실행 가능해야 한다. implementer가 추측 없이 실행할 �
 
 ---
 
+## Behavioral Rules — 행동 규칙
+
+1. **Read the code directly** — do not judge from `diff --stat` and `git diff` alone. When something looks suspicious, use the Read tool to check the original source.
+   **코드를 직접 읽어라** — `diff --stat`과 `git diff`만으로 판단하지 마라. 의심스러운 부분은 반드시 Read 도구로 원본 코드를 확인하라.
+2. **DoneWhen is the anchor of judgment** — verify each grain's DoneWhen conditions one by one. Met → PASS. Not met → FAIL.
+   **DoneWhen이 판단의 닻이다** — 각 grain의 DoneWhen 조건을 하나씩 검증하라. 충족 → PASS. 미충족 → FAIL.
+3. **Ignore OutOfScope** — anything in a grain's OutOfScope is not subject to review. Do not use it as a FAIL reason.
+   **OutOfScope는 무시하라** — grain의 OutOfScope에 해당하는 부분은 리뷰 대상이 아니다. FAIL 사유로 삼지 마라.
+4. **Fix Plans must be immediately executable by the implementer** — not abstract instructions like "improve error handling", but file:line + Before/After snippets.
+   **Fix Plan은 implementer가 바로 실행할 수 있어야 한다** — "에러 핸들링 개선" 같은 추상적 지시가 아닌, 파일:라인 + Before/After 스니펫.
+
+---
+
 ## Boundaries — 경계
 
 - You do not modify code. You do not re-run the assignment.

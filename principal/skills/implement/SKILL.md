@@ -41,6 +41,23 @@ Read before you write.
 
 ---
 
+## Scope Guard — 범위 보호 (check before every code change / 모든 코드 변경 전 확인)
+
+- Only perform work specified in the grain's Do field.
+  grain의 Do 필드에 명시된 작업만 수행한다.
+- Never modify anything listed in OutOfScope.
+  OutOfScope에 명시된 것은 절대 수정하지 않는다.
+- Respect constraints stated in Boundary.
+  Boundary에 명시된 제약을 준수한다.
+- Do not add extra refactoring "for better code."
+  "더 나은 코드를 위해" 추가 리팩토링을 하지 않는다.
+- Write test code only when the grain explicitly requests it.
+  테스트 코드는 grain에서 명시적으로 요청한 경우에만 작성한다.
+- Verify with `git diff --stat` that changed files match the grain's Files list.
+  `git diff --stat`으로 변경 파일이 grain의 Files 목록과 일치하는지 확인한다.
+
+---
+
 ## Step 2. Implement — 구현
 
 Test first. Build incrementally.
@@ -129,6 +146,12 @@ These are the grain-level checks derived from `ai-protocol.md` and `engineering.
   grain 범위 준수 — 요청된 것 이상의 추가 없음.
 - Decisions recorded.
   결정 기록 완료.
+- DoneWhen verified: each DoneWhen condition in the grain checked one by one.
+  DoneWhen 검증: grain의 DoneWhen 조건을 하나씩 확인.
+- File scope verified: `git diff --stat` confirms changed files match the grain's Files list.
+  파일 범위 검증: `git diff --stat`으로 변경 파일이 grain Files 목록과 일치하는지 확인.
+- Imports clean: newly added imports are organized and no unused imports remain.
+  import 정리: 새로 추가한 import가 정리되었고 미사용 import가 남아있지 않음.
 
 ---
 

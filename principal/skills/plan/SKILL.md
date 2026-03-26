@@ -114,6 +114,49 @@ One paragraph. What was asked and why.
 
 ---
 
+## Grain Quality Criteria — grain 품질 기준
+
+Each grain must satisfy the following criteria when written.
+각 grain 작성 시 아래 기준을 만족해야 한다.
+
+### Do field — Do 필드
+
+- Minimum 20 characters. Concrete and actionable.
+  최소 20자 이상의 구체적, 실행 가능한 설명.
+- Start with a verb ("Add...", "Refactor...", "Create...").
+  동사로 시작 ("Add...", "Refactor...", "Create...").
+- BAD: "Error handling" → GOOD: "Add error wrapping to HTTP handlers in `internal/api/handler.go`"
+  BAD: "에러 핸들링" → GOOD: "internal/api/handler.go의 HTTP 핸들러에 error wrapping 추가"
+
+### DoneWhen field — DoneWhen 필드
+
+- Minimum 15 characters. Must include mechanically verifiable conditions.
+  최소 15자 이상의 검증 가능한 완료 기준. 기계적 검증 가능 조건 포함.
+- Use the form "X works" or "X passes."
+  "~가 동작한다" 또는 "~를 통과한다" 형태.
+- BAD: "Works well" → GOOD: "`go test ./internal/api/...` passes, `/health` endpoint returns 200"
+  BAD: "잘 동작함" → GOOD: "`go test ./internal/api/...` 통과, `/health` 엔드포인트가 200 반환"
+
+### Files field — Files 필드
+
+- List file paths expected to change (minimum 1).
+  변경이 예상되는 파일 경로를 명시 (최소 1개).
+- Lets the implementer know where to work before starting.
+  implementer가 어디서 작업해야 하는지 사전 파악 가능.
+
+### Complexity judgment — 복잡도 판단
+
+- **S**: 1-2 files, minimal logic change, no new patterns.
+  파일 1-2개, 로직 변경 최소, 새 패턴 없음.
+- **M**: 2-5 files, implementation within existing patterns.
+  파일 2-5개, 기존 패턴 내 구현.
+- **L**: 5+ files, new patterns or architectural changes.
+  파일 5개 이상, 새 패턴/아키텍처 변경 포함.
+- When in doubt, round up (S → M is safer than M → S).
+  판단이 애매하면 한 단계 올려잡는다 (S보다 M이 안전).
+
+---
+
 ## When to Signal — 신호할 때
 
 Signal when you lack information to make a sound plan.
