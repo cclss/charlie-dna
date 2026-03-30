@@ -2,31 +2,34 @@
 
 > STATUS: DRAFT
 
+Technical structure. Includes tech stack and operational context.
 기술 구조. 기술 스택 + 운영 맥락 포함.
+
+Populated by interpreting masterplan.md during onboard.
 onboard 시 masterplan.md를 해석하여 채워진다.
 
 ---
 
-## 기술 스택
+## Tech Stack — 기술 스택
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
 
-## 디렉토리 구조
+## Directory Structure — 디렉토리 구조
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
 
-## 주요 패턴
+## Key Patterns — 주요 패턴
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
 
-## 외부 의존성
+## External Dependencies — 외부 의존성
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
 
-## 운영 맥락
+## Operational Context — 운영 맥락
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
 
-## 테스트 전략
+## Testing Strategy — 테스트 전략
 
-<!-- onboard 시 채워짐 -->
+<!-- Populated during onboard / onboard 시 채워짐 -->
