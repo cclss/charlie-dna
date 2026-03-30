@@ -2,6 +2,16 @@
 
 ---
 
+## v0.5.2 — 2026-03-30
+
+`lang/unified/` scaffold/context 병기화.
+
+- `lang/unified/scaffold/` 14개 파일을 한국어 only → 영문/국문 병기로 변환.
+- `lang/unified/context/` 7개 파일 동일 적용 (improvement-directive.md 포함).
+- `lang/ko/`, `lang/en/` 변경 없음.
+
+---
+
 ## v0.5.1 — 2026-03-30
 
 **Breaking**: 디렉토리 구조 변경 — flat → `lang/` 그룹핑.
