@@ -2,6 +2,29 @@
 
 ---
 
+## v0.5.1 — 2026-03-30
+
+**Breaking**: 디렉토리 구조 변경 — flat → `lang/` 그룹핑.
+
+### 구조 개편
+
+- 기존 루트의 `principal/`, `principal-ko/`, `principal-en/`, `agents/`, `agents-ko/`, `agents-en/`, `scaffold/`, `context/`를 `lang/{unified,ko,en}/` 하위로 이동.
+- 각 언어 디렉토리가 동일한 4벌 구조 완비: `principal/`, `agents/`, `scaffold/`, `context/`.
+
+### scaffold/context 다국어 추가
+
+- `lang/en/scaffold/` — 영어 AGENTS.md, learning/ 전체 번역.
+- `lang/en/context/` — 영어 context 템플릿 (overview, architecture, backlog 등).
+- `lang/ko/scaffold/` — 한국어 scaffold (기존 unified에서 분리).
+- `lang/ko/context/` — 한국어 context 템플릿 (기존 unified에서 분리).
+
+### CLI 마이그레이션
+
+- `MIGRATION-v0.5-cli.md` — charlie-cli 대응 가이드 추가.
+- `--lang` 플래그가 이제 scaffold/context에도 적용됨.
+
+---
+
 ## v0.4.0 — 2026-03-26
 
 SKILL/Agent 파일 개선 + 다국어 분리.
