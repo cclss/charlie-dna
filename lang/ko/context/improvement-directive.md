@@ -271,43 +271,43 @@ principal/
 ### 목표 구조
 
 ```
-principal/                 ← 기본 (현재와 동일, 영문/국문 병기 유지)
-├── INDEX.md
-├── ...
-└── skills/...
-
-principal-en/              ← 영문 전용
-├── INDEX.md
-├── ...
-└── skills/...
-
-principal-ko/              ← 국문 전용
-├── INDEX.md
-├── ...
-└── skills/...
+lang/
+├── unified/               ← 기본 (영문/국문 병기 유지)
+│   ├── principal/
+│   ├── agents/
+│   ├── scaffold/
+│   └── context/
+├── ko/                    ← 국문 전용
+│   ├── principal/
+│   ├── agents/
+│   ├── scaffold/
+│   └── context/
+└── en/                    ← 영문 전용
+    ├── principal/
+    ├── agents/
+    ├── scaffold/
+    └── context/
 ```
 
 ### 동작 방식 (CLI 쪽에서 처리)
 
-- `charlie init` (--lang 없음): `principal/` 그대로 사용 (기존 동작, 병기 버전)
-- `charlie init --lang ko`: `principal-ko/` 내용을 `.charlie/principal/`로 설치 (원래 `principal/` 스킵)
-- `charlie init --lang en`: `principal-en/` 내용을 `.charlie/principal/`로 설치
+- `charlie init` (--lang 없음): `lang/unified/` 사용 (기존 동작, 병기 버전)
+- `charlie init --lang ko`: `lang/ko/` 내용을 `.charlie/`로 설치
+- `charlie init --lang en`: `lang/en/` 내용을 `.charlie/`로 설치
 
 **CLI의 loader.go는 변경 없음** — 항상 `.charlie/principal/`에서 읽음. init 시점에 어떤 파일이 거기 들어갈지만 달라지는 것.
 
 ### 작업 지시
 
-1. **`principal/` 유지**: 현재 병기 버전 그대로 둔다. 이것이 `--lang` 미지정 시 기본값.
+1. **`lang/unified/` 유지**: 현재 병기 버전 그대로 둔다. 이것이 `--lang` 미지정 시 기본값.
 
-2. **`principal-en/` 생성**: `principal/`을 복사한 뒤, 각 파일에서 국문 부분을 제거하여 영문 전용으로 정리.
+2. **`lang/en/` 생성**: `lang/unified/`를 복사한 뒤, 각 파일에서 국문 부분을 제거하여 영문 전용으로 정리. scaffold/와 context/도 포함.
 
-3. **`principal-ko/` 생성**: `principal/`을 복사한 뒤, 각 파일에서 영문 부분을 제거하여 국문 전용으로 정리.
+3. **`lang/ko/` 생성**: `lang/unified/`를 복사한 뒤, 각 파일에서 영문 부분을 제거하여 국문 전용으로 정리. scaffold/와 context/도 포함.
 
-4. **`agents/` 디렉토리도 동일 적용**: `agents/`, `agents-en/`, `agents-ko/` 분리. (agents 파일도 병기되어 있다면)
+4. **파일 구조 유지**: 각 언어 디렉토리의 파일명, 디렉토리 구조, frontmatter 형식은 `lang/unified/`와 완전히 동일해야 한다. CLI가 경로 기반으로 로딩하므로.
 
-5. **파일 구조 유지**: 각 언어 디렉토리의 파일명, 디렉토리 구조, frontmatter 형식은 `principal/`과 완전히 동일해야 한다. CLI가 경로 기반으로 로딩하므로.
-
-6. **SKILL.md 파싱 호환**: frontmatter 키, `[VERDICT]` 같은 CLI 파싱 대상 텍스트는 언어와 무관하게 영문으로 유지. (CLI가 영문 키워드로 파싱하므로)
+5. **SKILL.md 파싱 호환**: frontmatter 키, `[VERDICT]` 같은 CLI 파싱 대상 텍스트는 언어와 무관하게 영문으로 유지. (CLI가 영문 키워드로 파싱하므로)
 
 ### 판단이 필요한 부분 — 유저에게 확인받을 것
 
@@ -327,10 +327,10 @@ principal-ko/              ← 국문 전용
   ├── agents/planner.md 수정 (B2)
   └── implement/SKILL.md 수정 (C1, C2)
 
-2단계: 파트 2 (다국어 분리)
-  ├── principal-en/ 생성
-  ├── principal-ko/ 생성
-  └── agents-{lang}/ 생성 (해당 시)
+2단계: 파트 2 (다국어 분리) — 완료
+  ├── lang/unified/ (통합본, 병기)
+  ├── lang/ko/ (한국어 전용)
+  └── lang/en/ (영어 전용)
 ```
 
 파트 1은 기존 파일 수정이므로 바로 착수 가능.
