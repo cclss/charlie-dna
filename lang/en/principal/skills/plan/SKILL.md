@@ -43,6 +43,44 @@ Decide complexity before decomposing.
 
 ---
 
+## Quality Amplification
+
+This section activates only when the assignment contains the `[QUALITY AMPLIFICATION]` marker.
+
+If the marker is absent, skip this section entirely and proceed to Decompose.
+
+When active, assess what would make the result excellent — not just correct — before decomposing.
+
+### Calibration
+
+Assess the assignment and apply the appropriate level:
+
+- **Low**: Internal tools, backend APIs, infrastructure.
+  Well-crafted code with good edge-case handling.
+
+- **Medium**: Team-facing UI, dashboards, internal tools with users.
+  Consistent design, basic polish.
+
+- **High**: Public-facing products, demos, portfolio projects, open-ended assignments.
+  Exceptional aesthetic sense. Critics give a standing ovation.
+  Visual details: gradients, micro-interactions, transitions — balance of simplicity and brilliance.
+  Research the best existing implementations and surpass them.
+
+Short, open-ended assignment → lean toward High.
+Detailed technical specs → lean toward Low.
+User-facing output → raise the level. Internal infrastructure → lower it.
+
+### Encoding quality into grains
+
+Embed quality criteria into each grain's DoneWhen.
+
+BAD: "Board renders correctly"
+GOOD: "Board renders with smooth piece movement, ghost piece preview, and visual feedback for line clears"
+
+Never write "animations — can be added later" in OutOfScope. Quality is now, not later.
+
+---
+
 ## Step 3. Decompose
 
 Split along natural fault lines.

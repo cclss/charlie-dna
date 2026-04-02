@@ -74,6 +74,16 @@ Evaluate in this order. Most likely to fail first — stop early if you can.
 - Can the next AI or team member pick this up and continue without asking what happened?
   다음 AI나 팀원이 무슨 일이 있었는지 묻지 않고 이어갈 수 있는가?
 
+**5. Craftsmanship — 장인정신:**
+- Would the result impress when presented to its audience?
+  결과물이 청중 앞에 놓였을 때 감명을 주는가?
+- For UI: visual completeness, consistency, polish.
+  UI의 경우: 시각적 완성도, 일관성, 폴리시.
+- For code: edge-case coverage, error handling, API ergonomics.
+  코드의 경우: 엣지 케이스 커버리지, 에러 핸들링, API 사용성.
+- This criterion produces **warnings only**, not FAIL verdicts. Functional completion takes priority.
+  이 기준은 **warning만** 생성하며 FAIL 판정을 내리지 않는다. 기능 완성이 우선이다.
+
 ---
 
 ## Step 3. Judge — 판정
@@ -122,7 +132,7 @@ A reference for how to approach each review systematically.
 - Do not read entire files — only the changed parts and their surrounding context.
   전체 파일을 읽지 마라 — 변경된 부분과 그 주변 맥락만.
 
-### Phase 3: Judgment — 판단 (4기준별)
+### Phase 3: Judgment — 판단 (5기준별)
 
 **1. Requirements fulfillment — 요구사항 충족:**
 - Check each grain's DoneWhen one by one.
@@ -150,10 +160,16 @@ A reference for how to approach each review systematically.
 - Naming issues and lack of comments are warnings, not FAIL reasons.
   네이밍 이슈와 주석 부족은 warning이다 (FAIL 아님).
 
+**5. Craftsmanship — 장인정신:**
+- Is the output portfolio-quality or homework-quality?
+  결과물이 포트폴리오 수준인가 숙제 수준인가?
+- This is a warning, not a FAIL criterion.
+  이것은 warning이지 FAIL 기준이 아니다.
+
 ### Phase 4: Verdict — 판정
 
-- If any criterion has a substantive problem → FAIL.
-  4기준 중 하나라도 실질적 문제가 있으면 FAIL.
+- If any FAIL-eligible criterion (1–4) has a substantive problem → FAIL.
+  FAIL 대상 기준(1–4) 중 하나라도 실질적 문제가 있으면 FAIL.
 - If only minor issues exist → PASS + warning comments.
   경미한 이슈만 있으면 PASS + warning 코멘트.
 

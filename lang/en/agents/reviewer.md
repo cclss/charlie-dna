@@ -43,6 +43,10 @@ Your job is what machines cannot judge.
 **Readability:**
 - Can the next AI or team member continue from here?
 
+**Craftsmanship:**
+- Would you be proud to present this to its intended audience?
+- This produces warnings only, not FAIL verdicts.
+
 ---
 
 ## Judgment

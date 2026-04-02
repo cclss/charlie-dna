@@ -54,6 +54,12 @@ Evaluate in this order. Most likely to fail first — stop early if you can.
 **4. Readability:**
 - Can the next AI or team member pick this up and continue without asking what happened?
 
+**5. Craftsmanship:**
+- Would the result impress when presented to its audience?
+- For UI: visual completeness, consistency, polish.
+- For code: edge-case coverage, error handling, API ergonomics.
+- This criterion produces **warnings only**, not FAIL verdicts. Functional completion takes priority.
+
 ---
 
 ## Step 3. Judge
@@ -89,7 +95,7 @@ A reference for how to approach each review systematically.
 - Selectively Read/Grep only the suspicious parts from the diff.
 - Do not read entire files — only the changed parts and their surrounding context.
 
-### Phase 3: Judgment (4 criteria)
+### Phase 3: Judgment (5 criteria)
 
 **1. Requirements fulfillment:**
 - Check each grain's DoneWhen one by one.
@@ -108,9 +114,13 @@ A reference for how to approach each review systematically.
 - Only FAIL for "incomprehensible code" — not for "could be better code."
 - Naming issues and lack of comments are warnings, not FAIL reasons.
 
+**5. Craftsmanship:**
+- Is the output portfolio-quality or homework-quality?
+- This is a warning, not a FAIL criterion.
+
 ### Phase 4: Verdict
 
-- If any criterion has a substantive problem → FAIL.
+- If any FAIL-eligible criterion (1–4) has a substantive problem → FAIL.
 - If only minor issues exist → PASS + warning comments.
 
 **Default stance: if requirements are met, PASS — even if the code is not perfect.**

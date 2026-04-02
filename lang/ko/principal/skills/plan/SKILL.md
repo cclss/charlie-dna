@@ -43,6 +43,44 @@ assignment를 grain으로 바꾸는 절차.
 
 ---
 
+## 품질 증폭
+
+이 섹션은 assignment에 `[QUALITY AMPLIFICATION]` 마커가 포함되어 있을 때만 발동한다.
+
+마커가 없으면 이 섹션 전체를 건너뛰고 분해로 진행하라.
+
+발동 시, 분해 전에 결과물이 "정확한 것"이 아니라 "훌륭한 것"이 되려면 무엇이 필요한지 판단하라.
+
+### 수위 조절
+
+assignment를 판단하여 적절한 수준을 적용하라:
+
+- **Low**: 내부 도구, 백엔드 API, 인프라.
+  엣지 케이스가 잘 처리된 깔끔한 코드.
+
+- **Medium**: 팀 대면 UI, 대시보드, 사용자가 있는 내부 도구.
+  일관된 디자인, 기본적인 폴리시.
+
+- **High**: 대중 공개 프로덕트, 데모, 포트폴리오, open-ended 과제.
+  천부적 미적 감각. 평단이 기립박수.
+  시각적 디테일: 그래디언트, 마이크로 인터랙션, 트랜지션 — 단순함과 화려함의 밸런스.
+  동종 최고 수준의 구현을 조사하고, 그 수준을 넘겨라.
+
+짧고 open-ended인 assignment → High 쪽으로.
+상세한 기술 스펙 → Low 쪽으로.
+사용자 대면 결과물 → 수준을 올려라. 내부 인프라 → 낮춰라.
+
+### grain에 품질 내장
+
+각 grain의 DoneWhen에 품질 기준을 내장하라.
+
+BAD: "Board renders correctly"
+GOOD: "Board renders with smooth piece movement, ghost piece preview, and visual feedback for line clears"
+
+Out of scope에 "animations — 나중에"를 쓰지 마라. 품질은 지금이다. 나중이 아니다.
+
+---
+
 ## Step 3. 분해
 
 자연스러운 결함선을 따라 쪼개라.

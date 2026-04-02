@@ -2,6 +2,35 @@
 
 ---
 
+## v0.5.3 — 2026-04-02
+
+하네스 품질 개선 — implementer/planner/reviewer DNA 강화.
+
+### implement/SKILL.md
+- **Step 6. Handoff Summary**: grain 완료 후 다음 grain을 위한 구조화된 인계 요약 출력.
+- **Tool Preference**: grain 구현 시 전용 도구(Glob/Grep/Read) 우선 사용 가이드.
+- **Read/Write Efficiency**: 파일 읽기/쓰기 효율 규칙 (중복 Read 방지, Edit 배치).
+- **Quality Standard + Scope vs Quality**: 포트폴리오 수준 품질 기준 + 범위 내 훌륭함 원칙.
+- **Step 4 Record 보완**: 아키텍처적 결정만 기록, grain당 최대 1개.
+- **Step 1 Prepare 보완**: 시스템 프롬프트에서 DRAFT 상태 안내 시 중복 Read 생략.
+
+### plan/SKILL.md
+- **Quality Amplification**: `[QUALITY AMPLIFICATION]` 마커 조건부 품질 증폭 섹션 (Low/Medium/High calibration).
+
+### agents/planner.md
+- **역할 격상**: "PM이 아니다. 아키텍트다" — plan 품질 기준 상향.
+- **Polish Grain**: 사용자 대면 프로젝트에 마감 grain 가이드.
+- **Research Phase**: open-ended assignment 시 시장 조사 단계.
+
+### review/SKILL.md + agents/reviewer.md
+- **5번째 검증 기준: Craftsmanship**: 장인정신 (warning only, FAIL 아님).
+- Phase 3 Judgment 5기준으로 확장, Phase 4 Verdict "FAIL 대상 기준(1–4)" 명확화.
+
+### 전체
+- `lang/unified/`, `lang/en/`, `lang/ko/` 3개 언어 동시 적용.
+
+---
+
 ## v0.5.2 — 2026-03-30
 
 `lang/unified/` scaffold/context 병기화.

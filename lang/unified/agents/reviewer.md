@@ -60,6 +60,12 @@ Your job is what machines cannot judge.
 - Can the next AI or team member continue from here?
   다음 AI나 팀원이 여기서 이어갈 수 있는가?
 
+**Craftsmanship — 장인정신:**
+- Would you be proud to present this to its intended audience?
+  이것을 의도된 청중에게 자랑스럽게 보여줄 수 있는가?
+- This produces warnings only, not FAIL verdicts.
+  이것은 warning만 생성하며 FAIL 판정이 아니다.
+
 ---
 
 ## Judgment — 판정

@@ -20,11 +20,37 @@ Read before you write.
 - **Grain definition**: Read the grain in full. Know what to do, what is out of scope, affected files, and definition of done.
 - **Engineering standards**: Read `engineering.md`. This is non-negotiable.
 - **Boundaries**: Read `context/boundaries.md`. Know what not to do.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
 - **Architecture**: Read `context/architecture.md`. Know the technical structure and stack.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
 - **Conventions and traps**: Read `learning/before-you-start/`. Know what others learned the hard way.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
 - **Static analysis**: If `.x-ray/` or equivalent exists, read the analysis for modules this grain touches. Actual code structure over documentation when they conflict.
   If no analysis exists, use available static analysis tools before LLM exploration.
 - **Prior decisions**: Read `context/decisions/` for decisions relevant to this grain.
+
+---
+
+## Tool Preference
+
+When implementing a grain, prefer dedicated tools over Bash.
+
+- **File search**: Glob first. Bash `find` only for complex conditions.
+- **Content search**: Grep first. Bash `grep` only when piping is needed.
+- **File reading**: Read first. Not `cat`, `head`, `tail` via Bash.
+
+Bash is fine for: build, test, git, package managers, server startup.
+
+This is a preference, not a ban. Use Bash when the dedicated tool cannot do what you need.
+
+---
+
+## Read/Write Efficiency
+
+- Read the entire file once when modifying it. Do not read 50 lines at a time.
+- Batch related edits into a single Edit call. Seven edits of 40-character differences is wasteful.
+- Do not Read the same file more than twice within a grain unless you modified it between reads.
+- For new files, use a single Write call with complete content.
 
 ---
 
@@ -36,6 +62,25 @@ Read before you write.
 - Do not add extra refactoring "for better code."
 - Write test code only when the grain explicitly requests it.
 - Verify with `git diff --stat` that changed files match the grain's Files list.
+
+---
+
+## Quality Standard
+
+This grain is your only chance to implement this part. There is no polish pass afterward.
+
+Aim for portfolio-quality, not homework-quality.
+
+---
+
+## Scope vs Quality
+
+Execute the grain's Do field brilliantly. Do not add anything not in Do.
+
+"Brilliant" means brilliant within scope, not expanding scope.
+
+- "Render the board" → making the rendering beautiful is within scope. Adding a Hold feature is not.
+- If DoneWhen does not mention it, do not add it. That is scope creep.
 
 ---
 
@@ -80,6 +125,9 @@ Errors are information. Act on them, do not hide them.
 Record as you go. Not at the end.
 
 - **Decisions**: When you choose between two valid approaches, that is a decision. Record it in `context/decisions/` before continuing — not after. If you chose A over B, record why.
+  Record only architecturally significant decisions (coordinate systems, API contracts, data flow patterns).
+  Implementation details (error handling strategy, cell value representation) belong in code comments, not decision files.
+  Maximum one decision record per grain. Zero if no significant decision was made.
 - **Backlog**: Unrelated issues, tech debt, improvements out of scope → `context/backlog.md`.
 
 ---
@@ -99,6 +147,34 @@ These are the grain-level checks derived from `ai-protocol.md` and `engineering.
 - DoneWhen verified: each DoneWhen condition in the grain checked one by one.
 - File scope verified: `git diff --stat` confirms changed files match the grain's Files list.
 - Imports clean: newly added imports are organized and no unused imports remain.
+
+---
+
+## Step 6. Handoff Summary
+
+Leave a structured summary for the next grain after Verify passes.
+
+This summary is automatically injected into the next grain's context by the orchestrator.
+
+Output this at the end of your response, after any other output:
+
+~~~~
+### Files Changed
+- {filename} (+N lines) — {what changed}
+
+### Key Interfaces Added
+- {functionName}({params}) → {returnType} — {description}
+- {CONSTANT_NAME}: {description}
+
+### Decisions
+- {decision} — {reason}
+~~~~
+
+Rules:
+
+- Maximum 3-5 bullet points per section. Focus on what the next grain needs.
+- Do not repeat the grain's Do/DoneWhen — the next grain already has those.
+- Omit Decisions section if no significant decisions were made.
 
 ---
 

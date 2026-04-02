@@ -63,6 +63,61 @@ Decide complexity before decomposing.
 
 ---
 
+## Quality Amplification — 품질 증폭
+
+This section activates only when the assignment contains the `[QUALITY AMPLIFICATION]` marker.
+이 섹션은 assignment에 `[QUALITY AMPLIFICATION]` 마커가 포함되어 있을 때만 발동한다.
+
+If the marker is absent, skip this section entirely and proceed to Decompose.
+마커가 없으면 이 섹션 전체를 건너뛰고 Decompose로 진행하라.
+
+When active, assess what would make the result excellent — not just correct — before decomposing.
+발동 시, 분해 전에 결과물이 "정확한 것"이 아니라 "훌륭한 것"이 되려면 무엇이 필요한지 판단하라.
+
+### Calibration — 수위 조절
+
+Assess the assignment and apply the appropriate level:
+assignment를 판단하여 적절한 수준을 적용하라:
+
+- **Low**: Internal tools, backend APIs, infrastructure.
+  Well-crafted code with good edge-case handling.
+  **Low**: 내부 도구, 백엔드 API, 인프라.
+  엣지 케이스가 잘 처리된 깔끔한 코드.
+
+- **Medium**: Team-facing UI, dashboards, internal tools with users.
+  Consistent design, basic polish.
+  **Medium**: 팀 대면 UI, 대시보드, 사용자가 있는 내부 도구.
+  일관된 디자인, 기본적인 폴리시.
+
+- **High**: Public-facing products, demos, portfolio projects, open-ended assignments.
+  Exceptional aesthetic sense. Critics give a standing ovation.
+  Visual details: gradients, micro-interactions, transitions — balance of simplicity and brilliance.
+  Research the best existing implementations and surpass them.
+  **High**: 대중 공개 프로덕트, 데모, 포트폴리오, open-ended 과제.
+  천부적 미적 감각. 평단이 기립박수.
+  시각적 디테일: 그래디언트, 마이크로 인터랙션, 트랜지션 — 단순함과 화려함의 밸런스.
+  동종 최고 수준의 구현을 조사하고, 그 수준을 넘겨라.
+
+Short, open-ended assignment → lean toward High.
+Detailed technical specs → lean toward Low.
+User-facing output → raise the level. Internal infrastructure → lower it.
+짧고 open-ended인 assignment → High 쪽으로.
+상세한 기술 스펙 → Low 쪽으로.
+사용자 대면 결과물 → 수준을 올려라. 내부 인프라 → 낮춰라.
+
+### Encoding quality into grains — grain에 품질 내장
+
+Embed quality criteria into each grain's DoneWhen.
+각 grain의 DoneWhen에 품질 기준을 내장하라.
+
+BAD: "Board renders correctly"
+GOOD: "Board renders with smooth piece movement, ghost piece preview, and visual feedback for line clears"
+
+Never write "animations — can be added later" in OutOfScope. Quality is now, not later.
+Out of scope에 "animations — 나중에"를 쓰지 마라. 품질은 지금이다. 나중이 아니다.
+
+---
+
 ## Step 3. Decompose — 분해
 
 Split along natural fault lines.

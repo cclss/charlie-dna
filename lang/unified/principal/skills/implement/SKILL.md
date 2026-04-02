@@ -28,16 +28,55 @@ Read before you write.
   `engineering.md`를 읽어라. 협상 불가.
 - **Boundaries**: Read `context/boundaries.md`. Know what not to do.
   `context/boundaries.md`를 읽어라. 하지 말아야 할 것을 파악하라.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
+  시스템 프롬프트에서 이미 해당 파일이 DRAFT이거나 비어있다고 알려주면, 다시 Read하지 마라.
 - **Architecture**: Read `context/architecture.md`. Know the technical structure and stack.
   `context/architecture.md`를 읽어라. 기술 구조와 스택을 파악하라.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
+  시스템 프롬프트에서 이미 해당 파일이 DRAFT이거나 비어있다고 알려주면, 다시 Read하지 마라.
 - **Conventions and traps**: Read `learning/before-you-start/`. Know what others learned the hard way.
   `learning/before-you-start/`를 읽어라. 남들이 어렵게 배운 것을 파악하라.
+  If the system prompt already states the file is DRAFT or empty, do not Read it again.
+  시스템 프롬프트에서 이미 해당 파일이 DRAFT이거나 비어있다고 알려주면, 다시 Read하지 마라.
 - **Static analysis**: If `.x-ray/` or equivalent exists, read the analysis for modules this grain touches. Actual code structure over documentation when they conflict.
   `.x-ray/` 또는 동등한 것이 있으면 이 grain이 건드리는 모듈의 분석을 읽어라. 충돌 시 문서보다 실제 코드 구조를 우선하라.
   If no analysis exists, use available static analysis tools before LLM exploration.
   분석 결과가 없으면 LLM 탐색 전에 가용한 정적 분석 도구를 사용하라.
 - **Prior decisions**: Read `context/decisions/` for decisions relevant to this grain.
   `context/decisions/`에서 이 grain과 관련된 결정을 읽어라.
+
+---
+
+## Tool Preference — 도구 우선순위
+
+When implementing a grain, prefer dedicated tools over Bash.
+grain 구현 시, Bash보다 전용 도구를 우선하라.
+
+- **File search**: Glob first. Bash `find` only for complex conditions.
+  **파일 검색**: Glob 우선. Bash `find`는 복잡한 조건에서만.
+- **Content search**: Grep first. Bash `grep` only when piping is needed.
+  **내용 검색**: Grep 우선. Bash `grep`은 파이핑이 필요할 때만.
+- **File reading**: Read first. Not `cat`, `head`, `tail` via Bash.
+  **파일 읽기**: Read 우선. Bash의 `cat`, `head`, `tail` 사용 금지.
+
+Bash is fine for: build, test, git, package managers, server startup.
+Bash 자유 사용: 빌드, 테스트, git, 패키지 매니저, 서버 기동.
+
+This is a preference, not a ban. Use Bash when the dedicated tool cannot do what you need.
+우선순위이지 금지가 아니다. 전용 도구로 안 되면 Bash를 써라.
+
+---
+
+## Read/Write Efficiency — 읽기/쓰기 효율
+
+- Read the entire file once when modifying it. Do not read 50 lines at a time.
+  수정할 파일은 전체를 한 번에 읽어라. 50줄씩 나눠 읽지 마라.
+- Batch related edits into a single Edit call. Seven edits of 40-character differences is wasteful.
+  관련 편집을 한 번의 Edit 호출로 모아라. 40자 차이를 7번 Edit하는 것은 낭비다.
+- Do not Read the same file more than twice within a grain unless you modified it between reads.
+  grain 내에서 같은 파일을 두 번 이상 Read하지 마라 — 중간에 수정한 경우 제외.
+- For new files, use a single Write call with complete content.
+  새 파일은 Write 한 번으로 전체 내용을 작성하라.
 
 ---
 
@@ -55,6 +94,31 @@ Read before you write.
   테스트 코드는 grain에서 명시적으로 요청한 경우에만 작성한다.
 - Verify with `git diff --stat` that changed files match the grain's Files list.
   `git diff --stat`으로 변경 파일이 grain의 Files 목록과 일치하는지 확인한다.
+
+---
+
+## Quality Standard — 품질 기준
+
+This grain is your only chance to implement this part. There is no polish pass afterward.
+이 grain이 이 부분을 구현할 유일한 기회다. 이후에 polish pass는 없다.
+
+Aim for portfolio-quality, not homework-quality.
+숙제 수준이 아닌 포트폴리오 수준을 목표로 하라.
+
+---
+
+## Scope vs Quality — 범위 vs 품질
+
+Execute the grain's Do field brilliantly. Do not add anything not in Do.
+grain의 Do 필드를 훌륭하게 수행하라. Do에 없는 것은 추가하지 마라.
+
+"Brilliant" means brilliant within scope, not expanding scope.
+"훌륭함"은 범위 안에서의 훌륭함이지, 범위를 넓히는 것이 아니다.
+
+- "Render the board" → making the rendering beautiful is within scope. Adding a Hold feature is not.
+  "보드를 렌더링하라" → 렌더링을 아름답게 하는 건 범위 안이다. Hold 기능을 추가하는 건 아니다.
+- If DoneWhen does not mention it, do not add it. That is scope creep.
+  DoneWhen에 언급되지 않은 것을 추가하면 범위 이탈이다.
 
 ---
 
@@ -121,6 +185,12 @@ Record as you go. Not at the end.
 
 - **Decisions**: When you choose between two valid approaches, that is a decision. Record it in `context/decisions/` before continuing — not after. If you chose A over B, record why.
   두 유효한 접근 중 하나를 택하면, 그것이 결정이다. 계속하기 전에 `context/decisions/`에 기록하라 — 나중이 아니라 지금. A 대신 B를 택했으면 이유를 기록하라.
+  Record only architecturally significant decisions (coordinate systems, API contracts, data flow patterns).
+  아키텍처적으로 중요한 결정만 기록하라 (좌표계, API 계약, 데이터 흐름 패턴).
+  Implementation details (error handling strategy, cell value representation) belong in code comments, not decision files.
+  구현 상세 (에러 핸들링 전략, 셀 값 표현)는 결정 파일이 아니라 코드 주석에 둔다.
+  Maximum one decision record per grain. Zero if no significant decision was made.
+  grain당 최대 1개 결정 기록. 중요한 결정이 없었으면 0개.
 - **Backlog**: Unrelated issues, tech debt, improvements out of scope → `context/backlog.md`.
   관련 없는 이슈, 기술 부채, 범위 밖 개선 → `context/backlog.md`.
 
@@ -152,6 +222,41 @@ These are the grain-level checks derived from `ai-protocol.md` and `engineering.
   파일 범위 검증: `git diff --stat`으로 변경 파일이 grain Files 목록과 일치하는지 확인.
 - Imports clean: newly added imports are organized and no unused imports remain.
   import 정리: 새로 추가한 import가 정리되었고 미사용 import가 남아있지 않음.
+
+---
+
+## Step 6. Handoff Summary — 인계 요약
+
+Leave a structured summary for the next grain after Verify passes.
+Verify 통과 후, 다음 grain을 위한 구조화된 요약을 남겨라.
+
+This summary is automatically injected into the next grain's context by the orchestrator.
+이 요약은 오케스트레이터가 다음 grain의 맥락에 자동으로 주입한다.
+
+Output this at the end of your response, after any other output:
+다른 모든 출력 뒤, 응답의 마지막에 이것을 출력하라:
+
+~~~~
+### Files Changed
+- {filename} (+N lines) — {what changed / 변경 내용}
+
+### Key Interfaces Added
+- {functionName}({params}) → {returnType} — {description / 설명}
+- {CONSTANT_NAME}: {description / 설명}
+
+### Decisions
+- {decision} — {reason / 이유}
+~~~~
+
+Rules:
+규칙:
+
+- Maximum 3-5 bullet points per section. Focus on what the next grain needs.
+  섹션당 최대 3-5개 불릿. 다음 grain이 필요한 것에 집중하라.
+- Do not repeat the grain's Do/DoneWhen — the next grain already has those.
+  grain의 Do/DoneWhen을 반복하지 마라 — 다음 grain이 이미 가지고 있다.
+- Omit Decisions section if no significant decisions were made.
+  중요한 결정이 없었으면 Decisions 섹션을 생략하라.
 
 ---
 
