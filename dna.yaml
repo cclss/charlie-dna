@@ -1,0 +1,22 @@
+apiVersion: charlie.cclss.net/v1
+kind: DNA
+metadata:
+  name: charlie-dna
+  version: "1.0.0"
+  description: >
+    Core orchestration DNA for Charlie Cloud. Supplies planner, implementer,
+    and reviewer agents plus the principal rules they share. Uses the
+    language-unified variant.
+  author: cclss
+spec:
+  kind: engineering
+  entrypoint: lang/unified/principal/INDEX.md
+  paths:
+    principal: ./lang/unified/principal
+    agents:    ./lang/unified/agents
+    context:   ./lang/unified/context
+  producesContext: true
+  tags: [core, pipeline, unified]
+  requires:
+    env:
+      - GITHUB_TOKEN
