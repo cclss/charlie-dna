@@ -2,6 +2,27 @@
 
 ---
 
+## v1.2.0 — 2026-04-27
+
+charlie-cloud M13 Phase E 와 짝. implementer 가 grain 끝마다 변경
+파일/함수/import 를 기계가 읽을 수 있는 JSON 으로 emit 하도록 추가.
+오케스트레이터의 atlas 파이프라인 (M13) 이 이 힌트를 받아 코드 분석
+누적을 풍부하게 함 — tree-sitter 만으로 전부 재유도하지 않도록.
+
+### implement/SKILL.md (3 변종 sync)
+- **Step 7. Code Analysis Emit** 신규. Step 6 Handoff Summary 다음에
+  `analysis-emit` 펜스 블록으로 `files_changed` / `functions_added` /
+  `functions_modified` / `imports_added` / `imports_removed` 를
+  내보냄. grain 이 파일 변경 없으면 섹션 자체를 생략 (빈 payload =
+  노이즈).
+- 베스트 에포트 힌트 — 파싱 실패/부재 시 오케스트레이터가 tree-sitter
+  rescan 으로 폴백.
+
+### dna.yaml
+- version 1.1.0 → 1.2.0 (additive minor — 미출력 시 무영향).
+
+---
+
 ## v1.1.0 — 2026-04-27
 
 Project Atlas 인프라 통합 — charlie-cloud M12 와 짝.

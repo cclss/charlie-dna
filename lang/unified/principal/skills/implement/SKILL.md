@@ -260,6 +260,48 @@ Rules:
 
 ---
 
+## Step 7. Code Analysis Emit — 코드 분석 emit
+
+After the Handoff Summary, emit a single machine-readable snapshot of what *this grain*
+changed. The orchestrator's atlas pipeline (M13) parses this hint to enrich the project's
+cumulative code-analysis without re-deriving everything from tree-sitter alone.
+Handoff Summary 다음에, **이 grain이 무엇을 바꿨는지** 한 번 emit 한다. 오케스트레이터의
+atlas 파이프라인 (M13) 이 이 힌트를 파싱하여 프로젝트 누적 코드 분석을 풍부하게 한다 —
+tree-sitter 만으로 전부 재유도하지 않도록.
+
+Output exactly one fenced code block with the language tag `analysis-emit`. Skip the
+section entirely when this grain made zero file changes (empty payloads add noise).
+정확히 한 개의 펜스 코드 블록을 `analysis-emit` 언어 태그와 함께 출력하라. 이 grain이
+파일을 전혀 바꾸지 않았으면 섹션 자체를 생략하라 (빈 payload 는 노이즈).
+
+~~~analysis-emit
+{
+  "files_changed": ["path/to/a.go", "path/to/b.ts"],
+  "functions_added": ["FuncA", "FuncB"],
+  "functions_modified": ["FuncC"],
+  "imports_added": ["lodash", "fmt"],
+  "imports_removed": []
+}
+~~~
+
+Rules:
+규칙:
+
+- Paths are repo-relative with forward slashes.
+  경로는 repo 기준 상대 경로, forward slash.
+- Function names as declared (no signatures, no class qualifier unless that is the
+  declared name).
+  함수 이름은 선언 그대로 (시그니처 X, 클래스 한정자 X — 단, 선언 이름이 그렇다면 유지).
+- Imports are the imported module/package identity, not the local alias.
+  import 는 가져온 모듈/패키지 정체성. 로컬 별칭이 아니다.
+- This is a best-effort hint, not a contract — the orchestrator falls back to a fresh
+  tree-sitter scan on parse failure or absence. Better to skip the block than emit a
+  malformed one.
+  베스트 에포트 힌트이지 계약이 아니다 — 파싱 실패나 부재 시 오케스트레이터가 새로운
+  tree-sitter 스캔으로 폴백한다. 잘못된 블록보다 생략이 낫다.
+
+---
+
 ## When to Signal — 신호할 때
 
 Signal when you cannot proceed safely within the grain's scope.

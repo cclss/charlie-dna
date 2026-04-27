@@ -178,6 +178,37 @@ Rules:
 
 ---
 
+## Step 7. Code Analysis Emit
+
+After the Handoff Summary, emit a single machine-readable snapshot of what *this grain*
+changed. The orchestrator's atlas pipeline (M13) parses this hint to enrich the project's
+cumulative code-analysis without re-deriving everything from tree-sitter alone.
+
+Output exactly one fenced code block with the language tag `analysis-emit`. Skip the
+section entirely when this grain made zero file changes (empty payloads add noise).
+
+~~~analysis-emit
+{
+  "files_changed": ["path/to/a.go", "path/to/b.ts"],
+  "functions_added": ["FuncA", "FuncB"],
+  "functions_modified": ["FuncC"],
+  "imports_added": ["lodash", "fmt"],
+  "imports_removed": []
+}
+~~~
+
+Rules:
+
+- Paths are repo-relative with forward slashes.
+- Function names as declared (no signatures, no class qualifier unless that is the
+  declared name).
+- Imports are the imported module/package identity, not the local alias.
+- This is a best-effort hint, not a contract — the orchestrator falls back to a fresh
+  tree-sitter scan on parse failure or absence. Better to skip the block than emit a
+  malformed one.
+
+---
+
 ## When to Signal
 
 Signal when you cannot proceed safely within the grain's scope.
