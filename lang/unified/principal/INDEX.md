@@ -19,6 +19,14 @@ Every file has a purpose. Every file has a time.
 **Always — load with this file (항상 — 이 파일과 함께 로드):**
 - `ai-protocol.md` — Rules for AI. 범위, 불확실성 대응, 완료 정의.
 
+**Before plan stage (계획 단계 전):**
+- If `$PROJECT_ATLAS_PATH` env is set, read its `timeline.md`, `architecture.md`,
+  and `decisions.md`. These are the project's cumulative big picture across all
+  prior delivered jobs. Skill `skills/plan/SKILL.md` Step 1 covers the details.
+  `$PROJECT_ATLAS_PATH` env가 설정되어 있으면 그 아래 `timeline.md`,
+  `architecture.md`, `decisions.md`를 먼저 읽어라. 이전에 납품된 모든 잡의
+  누적된 큰 그림이다. 상세는 `skills/plan/SKILL.md` Step 1에 있다.
+
 **Before writing code (코드 작성 전):**
 - `engineering.md` — Engineering standards. 테스트, 격리, 게이트, 결정 기록.
 

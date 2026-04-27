@@ -17,6 +17,11 @@ version: 1.0.0
 **항상 — 이 파일과 함께 로드:**
 - `ai-protocol.md` — 범위, 불확실성 대응, 완료 정의.
 
+**계획 단계 전:**
+- `$PROJECT_ATLAS_PATH` env가 설정되어 있으면 그 아래 `timeline.md`,
+  `architecture.md`, `decisions.md`를 먼저 읽어라. 이전에 납품된 모든 잡의
+  누적된 큰 그림이다. 상세는 `skills/plan/SKILL.md` Step 1에 있다.
+
 **코드 작성 전:**
 - `engineering.md` — 테스트, 격리, 게이트, 결정 기록.
 

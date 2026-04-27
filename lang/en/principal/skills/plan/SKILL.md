@@ -21,6 +21,13 @@ Read before you think.
 - **Context**: Read `context/overview.md` and `context/architecture.md`. Know what this project is and how it is built.
   If `context/architecture.md` is DRAFT or absent, explore the codebase directly to understand the structure.
 - **Boundaries**: Read `context/boundaries.md`. Know what not to do.
+- **Project atlas**: If `$PROJECT_ATLAS_PATH` env is set, read every file under it before planning:
+  - `timeline.md` — chronological index of prior delivered jobs (one line each, with link to that job's `plan.md`).
+  - `architecture.md` — cumulative architectural decisions across delivered jobs.
+  - `decisions.md` — cumulative trade-offs, rejected alternatives, deferred follow-ups.
+  - `code-analysis/graph.json` and `code-analysis/components.md` (when present) — structural code map.
+  These files are the project's "big picture". The new plan must stay consistent with them.
+  For deeper detail on a specific past job, follow `timeline.md`'s link into that job's `plan.md`.
 - **Static analysis**: If `.x-ray/` or equivalent exists, read `summary.md` and `graph.json` first. They reflect the actual code structure more accurately than documentation. Use them over `architecture.md` when they conflict.
   If no analysis exists, explore the codebase directly. Static analysis first, LLM exploration last.
 - **Prior decisions**: Read `context/decisions/` for decisions relevant to this assignment.

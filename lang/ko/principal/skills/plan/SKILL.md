@@ -21,6 +21,13 @@ assignment를 grain으로 바꾸는 절차.
 - **Context**: `context/overview.md`와 `context/architecture.md`를 읽어라. 이 프로젝트가 무엇이고 어떻게 만들어졌는지 파악하라.
   `context/architecture.md`가 DRAFT이거나 없으면, 코드베이스를 직접 탐색하여 구조를 파악하라.
 - **Boundaries**: `context/boundaries.md`를 읽어라. 하지 말아야 할 것을 파악하라.
+- **Project atlas**: `$PROJECT_ATLAS_PATH` env가 설정되어 있으면, 계획 전에 그 경로 아래 파일들을 모두 읽어라:
+  - `timeline.md` — 이전에 납품된 잡들의 시간순 인덱스 (한 줄/잡, 해당 잡 `plan.md` 링크 포함).
+  - `architecture.md` — 납품 잡 전체에 걸친 누적 아키텍처 결정.
+  - `decisions.md` — 누적된 트레이드오프, 기각된 대안, 보류된 후속.
+  - `code-analysis/graph.json` 와 `code-analysis/components.md` (있을 시) — 구조적 코드 맵.
+  이 파일들이 이 프로젝트의 "큰 그림"이다. 새 plan은 이 위에서 일관성 있게 그려야 한다.
+  특정 과거 잡의 상세는 `timeline.md`의 링크를 따라 그 잡의 `plan.md`로 drill-in 하라.
 - **Static analysis**: `.x-ray/` 또는 동등한 것이 있으면 `summary.md`와 `graph.json`을 먼저 읽어라. 문서보다 실제 코드 구조를 더 정확히 반영한다. 충돌 시 문서보다 우선하라.
   분석 결과가 없으면 코드베이스를 직접 탐색하라. 정적 분석 우선, LLM 탐색 후순위.
 - **Prior decisions**: `context/decisions/`에서 이 assignment와 관련된 결정을 읽어라.

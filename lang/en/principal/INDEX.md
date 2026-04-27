@@ -17,6 +17,11 @@ Every file has a purpose. Every file has a time.
 **Always — load with this file:**
 - `ai-protocol.md` — Rules for AI.
 
+**Before plan stage:**
+- If `$PROJECT_ATLAS_PATH` env is set, read its `timeline.md`, `architecture.md`,
+  and `decisions.md`. These are the project's cumulative big picture across all
+  prior delivered jobs. Skill `skills/plan/SKILL.md` Step 1 covers the details.
+
 **Before writing code:**
 - `engineering.md` — Engineering standards.
 

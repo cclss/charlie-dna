@@ -2,7 +2,7 @@ apiVersion: charlie.cclss.net/v1
 kind: DNA
 metadata:
   name: charlie-dna
-  version: "1.0.0"
+  version: "1.1.0"
   description: >
     Core orchestration DNA for Charlie Cloud. Supplies planner, implementer,
     and reviewer agents plus the principal rules they share. Uses the
