@@ -4,10 +4,10 @@
 
 ## v1.2.0 — 2026-04-27
 
-charlie-cloud M13 Phase E 와 짝. implementer 가 grain 끝마다 변경
-파일/함수/import 를 기계가 읽을 수 있는 JSON 으로 emit 하도록 추가.
-오케스트레이터의 atlas 파이프라인 (M13) 이 이 힌트를 받아 코드 분석
-누적을 풍부하게 함 — tree-sitter 만으로 전부 재유도하지 않도록.
+implementer 가 grain 끝마다 변경 파일/함수/import 를 기계가 읽을 수
+있는 JSON 으로 emit 하도록 추가. charlie-cloud 의 codeanalysis worker
+(branch-aware Type B queue) 가 이 힌트를 받아 코드 분석 누적을 풍부하게
+함 — tree-sitter rescan 만으로 전부 재유도하지 않도록.
 
 ### implement/SKILL.md (3 변종 sync)
 - **Step 7. Code Analysis Emit** 신규. Step 6 Handoff Summary 다음에
@@ -19,26 +19,14 @@ charlie-cloud M13 Phase E 와 짝. implementer 가 grain 끝마다 변경
   rescan 으로 폴백.
 
 ### dna.yaml
-- version 1.1.0 → 1.2.0 (additive minor — 미출력 시 무영향).
+- version 1.0.0 → 1.2.0 (additive minor — 미출력 시 무영향).
 
 ---
 
-## v1.1.0 — 2026-04-27
-
-Project Atlas 인프라 통합 — charlie-cloud M12 와 짝.
-
-### plan/SKILL.md (3 변종 sync)
-- **Step 1. Gather** 에 `Project atlas` 항목 추가. `$PROJECT_ATLAS_PATH` env 가
-  설정되어 있으면 plan 전에 `timeline.md` / `architecture.md` / `decisions.md` /
-  `code-analysis/` 누적 컨텍스트를 읽도록 지시.
-- 잡 단위 reset 으로 인한 큰 그림 망각 문제를 잡기 위한 변경. 이전 잡 상세는
-  `timeline.md` 의 link 따라 drill-in.
-
-### principal/INDEX.md (3 변종 sync)
-- Loading 섹션에 `Before plan stage` 항목 추가. atlas 읽기 진입점 안내.
-
-### dna.yaml
-- version 1.0.0 → 1.1.0 (additive feature, backward-compatible — env 미설정 시 no-op).
+> **참고**: v1.1.0 (Project Atlas) 은 cli/cc 측에서 atlas 개념을
+> 폐기 (code-analysis 와 의미 중첩) 하기로 결정해 dev 브랜치에서
+> 함께 제거됨. dna.yaml 의 version 도 1.0.0 → 1.2.0 으로 직접
+> 점프 (1.1.0 미출시).
 
 ---
 
