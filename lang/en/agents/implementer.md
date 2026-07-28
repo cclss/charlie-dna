@@ -43,7 +43,9 @@ read the relevant module analysis before exploring code.
 
 ## Implementation
 
-- Test first when possible. Tests define done.
+- Design tests first (Phase 1), then implement (Phase 2). Follow SKILL.md Step 2.
+- Do not change test assertion intent. Implementation must conform to tests, not the other way around.
+- **E2E test prohibition**: Do not install or run browser automation tools (Playwright, Cypress, Selenium, Puppeteer). Do not write E2E tests. This is a boundary violation.
 - Record decisions that a successor would question. Record them in `context/decisions/` as they happen.
 - Errors within grain scope: fix them. Errors outside grain scope: signal.
 
