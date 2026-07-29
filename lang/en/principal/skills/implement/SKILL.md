@@ -60,7 +60,7 @@ This is a preference, not a ban. Use Bash when the dedicated tool cannot do what
 - Never modify anything listed in OutOfScope.
 - Respect constraints stated in Boundary.
 - Do not add extra refactoring "for better code."
-- Write test code only when the grain explicitly requests it.
+- Write test code per Step 2 Phase 1, based on DoneWhen. Do not write additional tests unrelated to DoneWhen.
 - Verify with `git diff --stat` that changed files match the grain's Files list.
 
 ---
@@ -86,12 +86,35 @@ Execute the grain's Do field brilliantly. Do not add anything not in Do.
 
 ## Step 2. Implement
 
-Test first. Build incrementally.
+Design tests first, then implement. Keep the two phases separate.
 
-1. **Write a failing test** for the grain's definition of done. If tests are not feasible for this grain, document why and proceed.
-2. **Write the minimum code** to make the test pass.
-3. **Refactor** only within the grain's scope. Do not refactor surrounding code.
-4. **Run affected tests** after each meaningful change. Do not accumulate untested changes. Run the full suite in Step 5 before declaring done.
+### Phase 1 — Write Tests
+
+Design tests from the grain's DoneWhen criteria. If tests are not feasible for this grain, document why and proceed to Phase 2.
+
+- Write tests based on DoneWhen only. Do not consider implementation approach.
+- Verify at the public API/interface level. Do not write tests that depend on internal implementation details (private functions, internal structures).
+- Write all tests this grain needs at once. Do not cycle through write-one-test / confirm-fail / write-code loops.
+- Use mock adapters for external service integrations.
+
+### Phase 2 — Implement
+
+Make Phase 1's tests pass.
+
+1. Read existing code, then write your implementation.
+2. Run tests after the implementation is complete. Do not run tests after every change — run once per logical unit completion.
+3. If tests fail, fix the implementation and run again.
+4. Refactor only within the grain's scope. Do not refactor surrounding code.
+
+### Baseline Measurement
+
+Before starting implementation, run tests for affected packages and their direct dependents (1-hop) once. Tests that already fail at this point are pre-existing failures. They are not your responsibility — record them in `context/backlog.md` and exclude from pass criteria. Only tests that newly fail due to your changes are your fix targets.
+
+### Test Modification Rules
+
+- **Tests you wrote in this grain**: Fixing setup, teardown, imports, type alignment is allowed. However, do not change the assertion's intent (what is being verified) — changing assertion values, deleting test cases, and relaxing verification conditions are prohibited. Record the reason in the handoff summary when modifying.
+- **Pre-existing tests (tests that existed before this grain)**: Do not modify. If pre-existing tests break, your implementation is wrong. Fix your implementation.
+- **If a pre-existing test is genuinely wrong** (testing outdated behavior): Fix the test and record the decision in `context/decisions/`.
 
 Stay within the grain's scope. Unrelated issues discovered along the way go to `context/backlog.md`, not into your code.
 
@@ -106,11 +129,12 @@ Errors are information. Act on them, do not hide them.
 - If the cause is outside the grain's scope, signal (see "When to Signal").
 
 **Test failure:**
-- A failing test you wrote means your code is wrong. Fix the code, not the test.
-- If the test fails because it calls a real external service, fix the test — replace the real call with a mock adapter. Do not modify production code to make an environment-dependent test pass.
-- A pre-existing test failing means your change broke something. Understand why before changing anything.
+- A failing test you wrote means your code is wrong. Fix the code, not the test. Do not change the assertion's intent.
+- If the test fails because it calls a real external service, fix the test — replace the real call with a mock adapter. This is a mechanism fix, not an assertion intent change.
+- A pre-existing test failing means your change broke something. Do not modify the pre-existing test — fix your implementation.
+- Pre-existing failures (tests that already failed in the baseline) are not your responsibility. Record in `context/backlog.md` and move on.
 - If the affected code has no tests, write characterization tests before modifying it. Know what the code does now before changing what it does.
-- If a test is genuinely wrong (testing outdated behavior), fix the test and record the decision in `context/decisions/`.
+- If a pre-existing test is genuinely wrong (testing outdated behavior), fix the test and record the decision in `context/decisions/`.
 
 **Dependency conflict:**
 - Do not force-resolve. Understand the conflict. If resolution requires a decision beyond the grain's scope, signal (see "When to Signal").
@@ -139,7 +163,7 @@ Self-check before declaring done.
 These are the grain-level checks derived from `ai-protocol.md` and `engineering.md`:
 
 - Build passes.
-- Full test suite passes.
+- Full test suite passes (excluding pre-existing failures).
 - Lint passes.
 - No boundary violations.
 - Grain scope respected — no additions beyond what was asked.
