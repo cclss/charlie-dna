@@ -2,6 +2,59 @@
 
 ---
 
+## v0.6.1 — 2026-05-05
+
+charlie-cli v2-master / charlie-cloud dev 와 호환되는 첫 0.6 라인
+배포. 1.x 라벨 (atlas, code-analysis hint) 의 의도된 변경 중 cli/cc
+와 정합되는 부분만 살리고, atlas 는 폐기. dna.yaml 의 `metadata.version`
+을 git tag 와 동일한 `0.6.1` 로 정렬해 cc 의 `LoadManifest` 가
+revision 과 spec version 을 1:1 로 매칭할 수 있게 함.
+
+### dna.yaml
+- `metadata.version`: 1.2.0 → **0.6.1** (git tag 와 동일한 라인). 1.x
+  라벨 commit 들의 의도는 보존되지만 spec 버전은 0.6.x 로 회귀해
+  cli v2-master 의 expectation 과 매칭.
+
+### CHANGELOG
+- 1.x 항목 (v1.1.0 atlas, v1.2.0 code-analysis hint) 은 history 보존을
+  위해 그대로 남겨둠. 단 1.x 는 미배포 라벨이며 0.6.1 이 cli/cc 와
+  연결되는 첫 정식 라인.
+
+### atlas 후속
+- `f1dc7ef revert(v1.1.0): drop atlas` 로 이미 폐기. cli v2-master 의
+  loader.go 는 `atlas/ 디렉토리 폐기 — code-analysis/ 와 의미 중첩`
+  정책을 명시. 0.6.1 도 atlas 없이 출시.
+
+---
+
+## v1.2.0 — 2026-04-27
+
+implementer 가 grain 끝마다 변경 파일/함수/import 를 기계가 읽을 수
+있는 JSON 으로 emit 하도록 추가. charlie-cloud 의 codeanalysis worker
+(branch-aware Type B queue) 가 이 힌트를 받아 코드 분석 누적을 풍부하게
+함 — tree-sitter rescan 만으로 전부 재유도하지 않도록.
+
+### implement/SKILL.md (3 변종 sync)
+- **Step 7. Code Analysis Emit** 신규. Step 6 Handoff Summary 다음에
+  `analysis-emit` 펜스 블록으로 `files_changed` / `functions_added` /
+  `functions_modified` / `imports_added` / `imports_removed` 를
+  내보냄. grain 이 파일 변경 없으면 섹션 자체를 생략 (빈 payload =
+  노이즈).
+- 베스트 에포트 힌트 — 파싱 실패/부재 시 오케스트레이터가 tree-sitter
+  rescan 으로 폴백.
+
+### dna.yaml
+- version 1.0.0 → 1.2.0 (additive minor — 미출력 시 무영향).
+
+---
+
+> **참고**: v1.1.0 (Project Atlas) 은 cli/cc 측에서 atlas 개념을
+> 폐기 (code-analysis 와 의미 중첩) 하기로 결정해 dev 브랜치에서
+> 함께 제거됨. dna.yaml 의 version 도 1.0.0 → 1.2.0 으로 직접
+> 점프 (1.1.0 미출시).
+
+---
+
 ## v0.5.3 — 2026-04-02
 
 하네스 품질 개선 — implementer/planner/reviewer DNA 강화.
