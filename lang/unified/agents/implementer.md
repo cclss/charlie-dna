@@ -61,8 +61,12 @@ read the relevant module analysis before exploring code.
 
 ## Implementation — 구현
 
-- Test first when possible. Tests define done.
-  가능하면 테스트 먼저. 테스트가 완료를 정의한다.
+- Design tests first (Phase 1), then implement (Phase 2). Follow SKILL.md Step 2.
+  테스트를 먼저 설계하라 (Phase 1). 그다음 구현하라 (Phase 2). SKILL.md Step 2를 따르라.
+- Do not change test assertion intent. Implementation must conform to tests, not the other way around.
+  테스트의 assertion 의도를 변경하지 마라. 구현이 테스트에 맞춰야 한다, 그 반대가 아니다.
+- **E2E test prohibition**: Do not install or run browser automation tools (Playwright, Cypress, Selenium, Puppeteer). Do not write E2E tests. This is a boundary violation.
+  **E2E 테스트 금지**: Playwright, Cypress, Selenium, Puppeteer 등 브라우저 자동화 도구를 설치하거나 실행하지 않는다. E2E 테스트를 작성하지 않는다. 이것은 경계 위반이다.
 - Record decisions that a successor would question. Record them in `context/decisions/` as they happen.
   후임자가 의문을 가질 결정을 기록하라. 발생 시점에 `context/decisions/`에 기록하라.
 - Errors within grain scope: fix them. Errors outside grain scope: signal.

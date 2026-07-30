@@ -61,6 +61,7 @@ This is a preference, not a ban. Use Bash when the dedicated tool cannot do what
 - Respect constraints stated in Boundary.
 - Do not add extra refactoring "for better code."
 - Write test code per Step 2 Phase 1, based on DoneWhen. Do not write additional tests unrelated to DoneWhen.
+- **E2E/browser automation test prohibition.** Do not install, write, or run Playwright, Cypress, Selenium, or Puppeteer. Even if DoneWhen mentions 'e2e', substitute with unit tests. This is a global prohibition, not scope protection.
 - Verify with `git diff --stat` that changed files match the grain's Files list.
 
 ---

@@ -61,6 +61,7 @@ Bash 자유 사용: 빌드, 테스트, git, 패키지 매니저, 서버 기동.
 - Boundary에 명시된 제약을 준수한다.
 - "더 나은 코드를 위해" 추가 리팩토링을 하지 않는다.
 - 테스트 코드는 Step 2 Phase 1에 따라 DoneWhen 기반으로 작성한다. DoneWhen과 무관한 추가 테스트를 작성하지 마라.
+- **E2E/브라우저 자동화 테스트 절대 금지.** Playwright, Cypress, Selenium, Puppeteer를 설치, 작성, 실행하지 않는다. DoneWhen에 'e2e'가 명시되어 있더라도 단위 테스트로 대체하라. 이것은 범위 보호가 아니라 전역 금지다.
 - `git diff --stat`으로 변경 파일이 grain의 Files 목록과 일치하는지 확인한다.
 
 ---

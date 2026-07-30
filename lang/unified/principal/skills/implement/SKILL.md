@@ -90,8 +90,10 @@ This is a preference, not a ban. Use Bash when the dedicated tool cannot do what
   Boundary에 명시된 제약을 준수한다.
 - Do not add extra refactoring "for better code."
   "더 나은 코드를 위해" 추가 리팩토링을 하지 않는다.
-- Write test code only when the grain explicitly requests it.
-  테스트 코드는 grain에서 명시적으로 요청한 경우에만 작성한다.
+- Write test code per Step 2 Phase 1, based on DoneWhen. Do not write additional tests unrelated to DoneWhen.
+  테스트 코드는 Step 2 Phase 1에 따라 DoneWhen 기반으로 작성한다. DoneWhen과 무관한 추가 테스트를 작성하지 마라.
+- **E2E/browser automation test prohibition.** Do not install, write, or run Playwright, Cypress, Selenium, or Puppeteer. Even if DoneWhen mentions 'e2e', substitute with unit tests. This is a global prohibition, not scope protection.
+  **E2E/브라우저 자동화 테스트 절대 금지.** Playwright, Cypress, Selenium, Puppeteer를 설치, 작성, 실행하지 않는다. DoneWhen에 'e2e'가 명시되어 있더라도 단위 테스트로 대체하라. 이것은 범위 보호가 아니라 전역 금지다.
 - Verify with `git diff --stat` that changed files match the grain's Files list.
   `git diff --stat`으로 변경 파일이 grain의 Files 목록과 일치하는지 확인한다.
 
@@ -124,17 +126,49 @@ grain의 Do 필드를 훌륭하게 수행하라. Do에 없는 것은 추가하�
 
 ## Step 2. Implement — 구현
 
-Test first. Build incrementally.
-테스트 먼저. 점진적으로 구축하라.
+Design tests first, then implement. Keep the two phases separate.
+테스트를 먼저 설계하고, 그다음 구현하라. 두 단계를 분리하라.
 
-1. **Write a failing test** for the grain's definition of done. If tests are not feasible for this grain, document why and proceed.
-   grain의 완료 기준에 대한 실패하는 테스트를 작성하라. 이 grain에 테스트가 불가능하면 이유를 기록하고 진행하라.
-2. **Write the minimum code** to make the test pass.
-   테스트를 통과시키는 최소한의 코드를 작성하라.
-3. **Refactor** only within the grain's scope. Do not refactor surrounding code.
+### Phase 1 — Write Tests / 테스트 작성
+
+Design tests from the grain's DoneWhen criteria. If tests are not feasible for this grain, document why and proceed to Phase 2.
+grain의 DoneWhen 기준으로 테스트를 설계하라. 이 grain에 테스트가 불가능하면 이유를 기록하고 Phase 2로 진행하라.
+
+- Write tests based on DoneWhen only. Do not consider implementation approach.
+  DoneWhen만 보고 테스트를 작성하라. 구현 방법을 고려하지 마라.
+- Verify at the public API/interface level. Do not write tests that depend on internal implementation details.
+  공개 API/인터페이스 수준에서 검증하라. 내부 구현 상세에 의존하는 테스트를 쓰지 마라.
+- Write all tests this grain needs at once. Do not cycle through write-one-test / confirm-fail / write-code loops.
+  이 grain에 필요한 테스트를 전부 작성하라. 하나씩 쓰고 실패를 확인하는 사이클을 돌지 마라.
+- Use mock adapters for external service integrations.
+  외부 서비스 연동이 필요한 곳은 모의 어댑터를 사용하라.
+
+### Phase 2 — Implement / 구현
+
+Make Phase 1's tests pass. / Phase 1의 테스트를 통과시켜라.
+
+1. Read existing code, then write your implementation.
+   기존 코드를 읽고, 구현을 작성하라.
+2. Run tests after the implementation is complete. Do not run tests after every change — run once per logical unit completion.
+   구현이 완성되면 테스트를 돌려라. 변경마다 테스트를 돌리지 마라 — 논리적 단위 완성 후 1회 실행하라.
+3. If tests fail, fix the implementation and run again.
+   실패하면 구현을 수정하고 다시 돌려라.
+4. Refactor only within the grain's scope. Do not refactor surrounding code.
    grain 범위 안에서만 리팩터하라. 주변 코드를 리팩터하지 마라.
-4. **Run affected tests** after each meaningful change. Do not accumulate untested changes. Run the full suite in Step 5 before declaring done.
-   변경마다 영향받는 테스트를 돌려라. 테스트되지 않은 변경을 쌓지 마라. 완료 선언 전에 Step 5에서 전체 스위트를 돌려라.
+
+### Baseline Measurement / 베이스라인 측정
+
+Before starting implementation, run tests for affected packages and their direct dependents (1-hop) once. Tests that already fail at this point are pre-existing failures. They are not your responsibility — record them in `context/backlog.md` and exclude from pass criteria.
+구현 시작 전에 영향받는 패키지와 직접 의존 패키지(1-hop)의 테스트를 1회 실행하라. 이 시점에 이미 실패하는 테스트는 pre-existing failure다. 네 책임이 아니다 — `context/backlog.md`에 기록하고 pass 기준에서 제외하라.
+
+### Test Modification Rules / 테스트 수정 규칙
+
+- **Tests you wrote in this grain**: Fixing setup, teardown, imports, type alignment is allowed. However, do not change the assertion's intent — changing assertion values, deleting test cases, and relaxing verification conditions are prohibited. Record the reason in the handoff summary when modifying.
+  **이 grain에서 작성한 테스트**: setup, teardown, import, 타입 맞춤 등 메커니즘 수정은 허용한다. 단, assertion의 의도를 변경하지 마라 — assertion 값 변경, 테스트 케이스 삭제, 검증 조건 완화는 금지다.
+- **Pre-existing tests**: Do not modify. If pre-existing tests break, your implementation is wrong. Fix your implementation.
+  **기존 테스트**: 수정하지 마라. 기존 테스트가 깨지면 네 구현이 잘못된 것이다. 구현을 수정하라.
+- **If a pre-existing test is genuinely wrong** (testing outdated behavior): Fix the test and record the decision in `context/decisions/`.
+  **기존 테스트가 진짜 틀린 경우**: 테스트를 고치고 결정을 `context/decisions/`에 기록하라.
 
 Stay within the grain's scope. Unrelated issues discovered along the way go to `context/backlog.md`, not into your code.
 grain의 범위 안에 머물러라. 도중에 발견한 관련 없는 이슈는 코드가 아니라 `context/backlog.md`로 보내라.
@@ -155,12 +189,14 @@ Errors are information. Act on them, do not hide them.
 
 **Test failure:**
 테스트 실패:
-- A failing test you wrote means your code is wrong. Fix the code, not the test.
-  네가 작성한 테스트가 실패하면 코드가 틀린 것이다. 테스트가 아니라 코드를 고쳐라.
-- If the test fails because it calls a real external service, fix the test — replace the real call with a mock adapter. Do not modify production code to make an environment-dependent test pass.
-  테스트가 실제 외부 서비스 호출 때문에 실패하면, 테스트를 고쳐라 — 실제 호출을 모의 어댑터로 교체하라. 환경 의존적 테스트를 통과시키려고 프로덕션 코드를 수정하지 마라.
-- A pre-existing test failing means your change broke something. Understand why before changing anything.
-  기존 테스트가 실패하면 네 변경이 뭔가를 깨뜨린 것이다. 아무것도 바꾸기 전에 왜인지 이해하라.
+- A failing test you wrote means your code is wrong. Fix the code, not the test. Do not change the assertion's intent.
+  네가 작성한 테스트가 실패하면 코드가 틀린 것이다. 테스트가 아니라 코드를 고쳐라. 테스트의 assertion 의도를 바꾸지 마라.
+- If the test fails because it calls a real external service, fix the test — replace the real call with a mock adapter. This is a mechanism fix, not an assertion intent change.
+  테스트가 실제 외부 서비스 호출 때문에 실패하면, 테스트를 고쳐라 — 실제 호출을 모의 어댑터로 교체하라. 이것은 assertion 의도 변경이 아니라 메커니즘 수정이다.
+- A pre-existing test failing means your change broke something. Do not modify the pre-existing test — fix your implementation.
+  기존 테스트가 실패하면 네 변경이 뭔가를 깨뜨린 것이다. 기존 테스트를 수정하지 말고, 네 구현을 수정하라.
+- Pre-existing failures (tests that already failed in the baseline) are not your responsibility. Record in `context/backlog.md` and move on.
+  pre-existing failure (베이스라인에서 이미 실패한 테스트)는 네 책임이 아니다. `context/backlog.md`에 기록하고 넘어가라.
 - If the affected code has no tests, write characterization tests before modifying it. Know what the code does now before changing what it does.
   영향받는 코드에 테스트가 없으면, 수정 전에 특성 테스트를 작성하라. 코드가 지금 무엇을 하는지 알고 나서 바꿔라.
 - If a test is genuinely wrong (testing outdated behavior), fix the test and record the decision in `context/decisions/`.
@@ -206,8 +242,8 @@ These are the grain-level checks derived from `ai-protocol.md` and `engineering.
 
 - Build passes.
   빌드 통과.
-- Full test suite passes.
-  전체 테스트 스위트 통과.
+- Full test suite passes (excluding pre-existing failures).
+  전체 테스트 스위트 통과 (pre-existing failure 제외).
 - Lint passes.
   린트 통과.
 - No boundary violations.
