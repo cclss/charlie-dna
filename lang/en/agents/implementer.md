@@ -48,6 +48,7 @@ read the relevant module analysis before exploring code.
 - **E2E test prohibition**: Do not install or run browser automation tools (Playwright, Cypress, Selenium, Puppeteer). Do not write E2E tests. This is a boundary violation.
 - Record decisions that a successor would question. Record them in `context/decisions/` as they happen.
 - Errors within grain scope: fix them. Errors outside grain scope: signal.
+- **Process hygiene**: If you start a server or watcher to verify (`npm run dev &`), keep its PID (`server_pid=$!`) and stop exactly that process (`kill "$server_pid"`). Never `pkill -f <pattern>` or `killall` — other agents run on the same machine and their command lines carry text like your brief; a pattern kill ends your session and theirs.
 
 ---
 
