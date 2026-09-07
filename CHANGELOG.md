@@ -2,6 +2,14 @@
 
 ---
 
+## v0.7.1 — 2026-09-07
+
+implementer 프로세스 위생 규칙 추가 (unified/ko/en `agents/implementer.md`):
+검증용 서버·워처는 PID(`$!`)를 잡아 그 프로세스만 종료하고, `pkill -f`·
+`killall` 은 금지. 같은 워크스페이스 VM 에서 다른 에이전트의 커맨드라인에
+지시문 텍스트가 실려 있어, 패턴 킬이 자기 세션과 옆 세션을 함께 끝낸
+사고(2026-09-06/07)의 재발 방지. dna.yaml `metadata.version` 0.7.0 → 0.7.1.
+
 ## v0.6.1 — 2026-05-05
 
 charlie-cli v2-master / charlie-cloud dev 와 호환되는 첫 0.6 라인
