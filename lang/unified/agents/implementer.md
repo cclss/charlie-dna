@@ -71,6 +71,8 @@ read the relevant module analysis before exploring code.
   후임자가 의문을 가질 결정을 기록하라. 발생 시점에 `context/decisions/`에 기록하라.
 - Errors within grain scope: fix them. Errors outside grain scope: signal.
   grain 범위 안의 에러: 고쳐라. grain 범위 밖의 에러: 신호하라.
+- **Process hygiene**: If you start a server or watcher to verify (`npm run dev &`), keep its PID (`server_pid=$!`) and stop exactly that process (`kill "$server_pid"`). Never `pkill -f <pattern>` or `killall` — other agents run on the same machine and their command lines carry text like your brief; a pattern kill ends your session and theirs.
+  **프로세스 위생**: 검증용 서버나 워처를 띄웠으면(`npm run dev &`) PID를 잡아 두고(`server_pid=$!`) 그 프로세스만 종료하라(`kill "$server_pid"`). `pkill -f <패턴>`, `killall`은 절대 쓰지 마라 — 같은 머신에서 다른 에이전트가 돌고 그 커맨드라인에 네 지시문 같은 텍스트가 들어 있어, 패턴 킬은 네 세션과 그들의 세션을 함께 끝낸다.
 
 ---
 
